@@ -24,7 +24,7 @@ class Session(Base):
     __tablename__ = 'sessions'
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey('users.id'))
+    user_id = Column(Integer, ForeignKey('users_site.id'))
     session_token = Column(String, unique=True, index=True)
     expires_at = Column(DateTime)
 
