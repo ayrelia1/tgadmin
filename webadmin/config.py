@@ -7,11 +7,12 @@ from fastapi.staticfiles import StaticFiles
 
 load_dotenv()
 
+current_directory = os.path.abspath(os.path.dirname(__file__))
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="tgadmin/site/static"), name="static")
+app.mount("/static", StaticFiles(directory=current_directory + "/static"), name="static")
 
-templates = Jinja2Templates(directory="tgadmin/site/templates")
+templates = Jinja2Templates(directory=current_directory + "/templates")
 
 
 

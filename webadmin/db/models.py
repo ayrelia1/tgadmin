@@ -11,7 +11,7 @@ class Base(AsyncAttrs, DeclarativeBase):
     pass
 
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = 'users_site'
     
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
