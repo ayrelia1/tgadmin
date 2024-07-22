@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="index-container">
+        <h2>Welcome to Admin Panel</h2>
+        <p>Explore our features and enjoy a seamless experience with our platform.</p>
+        <p>Current time: <span id="current-time"></span>
+        <p>Check out our latest updates and news below!</p>
+        <!-- Add additional content or features here -->
+    </div>
+    <script src="/static/time.js" defer></script>
+{% endblock %}

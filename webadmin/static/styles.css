@@ -1,0 +1,215 @@
+/* styles.css */
+
+/* General Body Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #e0e0e0;
+    background-color: #121212;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Header Styles */
+header {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header nav a {
+    color: #e0e0e0;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: #bb86fc;
+}
+
+/* Main Content Styles */
+main {
+    padding: 80px 20px 20px; /* Adjusted padding to ensure content is visible */
+}
+
+.content-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    position: relative;
+}
+
+/* Form Container Styles */
+.form-container, .profile-container {
+    background: #1e1e1e;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    position: relative;
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Heading Styles */
+h2 {
+    margin-top: 0;
+    color: #bb86fc;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin: 10px 0 5px;
+    color: #e0e0e0;
+}
+
+form input {
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background: #333;
+    color: #e0e0e0;
+    transition: border-color 0.3s ease;
+}
+
+form input:focus {
+    border-color: #bb86fc;
+    outline: none;
+}
+
+form button {
+    padding: 12px;
+    background-color: #bb86fc;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+form button:hover {
+    background-color: #9a67ea;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    display: none; /* По умолчанию скрыт */
+}
+
+/* Стиль для сообщений об ошибках */
+.alert.error {
+    color: #a94442; /* Цвет текста */
+    background-color: #f2dede; /* Цвет фона */
+    border-color: #ebccd1; /* Цвет рамки */
+}
+
+/* Показать блок с ошибкой */
+.alert.show {
+    display: block;
+}
+
+/* Profile Container Styles */
+.profile-info p {
+    margin: 15px 0;
+    color: #e0e0e0;
+}
+
+.profile-action {
+    margin-top: 20px;
+}
+
+.logout-button {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #bb86fc;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #9a67ea;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Profile Card Styles */
+.profile-card {
+    background: #333;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    color: #e0e0e0;
+}
+
+/* Footer Styles */
+footer {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    padding: 15px 0;
+    text-align: center;
+}
+
+/* Index Page Styles */
+.index-container {
+    text-align: center;
+    color: #e0e0e0;
+}
+
+.index-container h2 {
+    color: #bb86fc;
+}
+
+.index-container p {
+    margin: 10px 0;
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.alert-danger {
+    background-color: #f44336;
+    color: #ffffff;
+}
+
