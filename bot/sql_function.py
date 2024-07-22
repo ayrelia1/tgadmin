@@ -3,7 +3,7 @@ from db.db import async_session, engine
 import sys, asyncio
 from sqlalchemy import text
 from sqlalchemy.future import select
-from db.models import User, UserData
+from db.models import UserTg, UserData
 
 class databasework:
     
@@ -36,14 +36,13 @@ class databasework:
             async with session.begin():
                 sql = "SELECT * FROM users WHERE user_id = :user_id"
                 result = await session.execute(text(sql), {"user_id": str(user_id)})
-                
                 return result.one_or_none() # Возвращает один результат или None
             
             
     async def check_user_o(user_id: str):
         async with async_session() as session:
             async with session.begin():
-                stmt = select(User).where(User.user_id == str(user_id))  # Используем ORM-запрос
+                stmt = select(UserTg).where(UserTg.user_id == str(user_id))  # Используем ORM-запрос
                 result = await session.execute(stmt)  # Выполнение запроса
                 user = result.scalar_one_or_none()  # Получение первого ORM-объекта
                 
@@ -52,7 +51,7 @@ class databasework:
                     user_id=user.user_id,
                     username=user.username,
                     status=user.status,
-                    subscribe=user.subscribe,
+                    has_access=user.has_access,
                     reg_date=user.reg_date,
                     ban=user.ban,
                 )
@@ -78,9 +77,9 @@ class databasework:
             async with session.begin():
                 sql = "SELECT * FROM users WHERE user_id = :user_id"
                 result = await session.execute(text(sql), {"user_id": str(user_id)})
-                status = result.one_or_none()  # Получение статуса пользователя
+                status = result.one_or_none()  # Получение статуса пользователя 
                 if status:
-                    return status[4] == 'admin'
+                    return status[4] == True
                 return 
     
     
@@ -92,4 +91,25 @@ class databasework:
                 result = await session.execute(text(sql))  # Выполнение запроса
                 return result.all()  # Возвращает все строки
     
+    
+    
+    async def get_all_otdels():
+        async with async_session() as session:
+            async with session.begin():
+                sql = "SELECT * FROM otdels"
+                result = await session.execute(text(sql))  # Выполнение запроса
+                return result.all()  # Возвращает все строки
+            
+            
+    async def get_all_questions_where_otdel_id(otdel_id: int):
+        async with async_session() as session:
+            async with session.begin():
+                sql = """
+                        SELECT q.id AS question_id, q.name AS question_name, q.answer, q.type_answer, q.file, o.name AS otdel_name
+                        FROM questions q
+                        JOIN otdels o ON q.otdel_id = o.id
+                        WHERE o.id = :otdel_id
+                    """
+                result = await session.execute(text(sql), {"otdel_id": otdel_id})  # Выполнение запроса
+                return result.all()  # Возвращает все строки
     

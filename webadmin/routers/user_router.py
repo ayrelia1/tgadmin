@@ -7,6 +7,13 @@ from db.db import async_session
 from function import decrypt_token, get_authenticated_user
 from config import templates
 from db.models import User
+from sqlalchemy.future import select
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+
+from bot.db.models import UserTg
 
 user_router = APIRouter()
 
@@ -26,6 +33,24 @@ async def profile(request: Request, user: User = Depends(get_authenticated_user)
         time_of_day = "evening"
 
     return templates.TemplateResponse("profile.html", {"request": request, "user": user, "time_of_day": time_of_day, "current_time": current_time})
+
+
+
+
+@user_router.get("/users", response_class=HTMLResponse)
+async def profile(request: Request, user: User = Depends(get_authenticated_user)):
+    async with async_session() as db_session:
+        # Создаем запрос для выборки всех пользователей
+        stmt = select(UserTg)
+        result = await db_session.execute(stmt)
+        # Получаем все строки
+        users = result.scalars().all()
+        
+
+    return templates.TemplateResponse("users.html", {"request": request, "user": user, "users": users})
+
+
+
 
 @user_router.get("/logout", response_class=HTMLResponse)
 async def logout(request: Request, session_token: str = Cookie(None)):

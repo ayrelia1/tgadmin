@@ -1,35 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-    <link rel="stylesheet" href="/static/styles.css">
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1>Profile</h1>
-            <nav>
-                <a href="/" class="nav-link">Home</a>
-                <a href="/logout" class="nav-link">Logout</a>
-            </nav>
-        </div>
-    </header>
-    <main>
-        <div class="content-container">
-            <h2>Welcome, {{ user.full_name }}</h2>
-            <p>Username: {{ user.username }}</p>
-            <p>Current Time: <span id="current-time"></span></p>
-            <!-- Any other profile details can be added here -->
-        </div>
-    </main>
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 My App. All rights reserved.</p>
-        </div>
-    </footer>
-    <script src="/static/scripts.js" defer></script>
-    <script src="/static/time.js" defer></script>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block extra_head %}
+<script src="/static/time.js" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <h2>Welcome, {{ user.full_name }}</h2>
+    <p>Username: {{ user.username }}</p>
+    <p>Current Time: <span id="current-time"></span></p>
+    <!-- Any other profile details can be added here -->
+</div>
+{% endblock %}

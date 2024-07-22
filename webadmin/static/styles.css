@@ -1,5 +1,3 @@
-/* styles.css */
-
 /* General Body Styles */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -8,6 +6,9 @@ body {
     color: #e0e0e0;
     background-color: #121212;
     overflow-x: hidden; /* Prevent horizontal scroll */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes at least full viewport height */
 }
 
 /* Header Styles */
@@ -49,6 +50,7 @@ header nav a:hover {
 /* Main Content Styles */
 main {
     padding: 80px 20px 20px; /* Adjusted padding to ensure content is visible */
+    flex: 1; /* Allows main to take remaining space */
 }
 
 .content-container {
@@ -179,6 +181,7 @@ footer {
     color: #e0e0e0;
     padding: 15px 0;
     text-align: center;
+    width: 100%;
 }
 
 /* Index Page Styles */
@@ -207,9 +210,177 @@ footer {
     }
 }
 
-
 .alert-danger {
     background-color: #f44336;
     color: #ffffff;
 }
 
+/* User Card Styles */
+.user-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.user-card {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+}
+
+.user-card-header {
+    margin-bottom: 15px;
+}
+
+.user-card-header h2 {
+    margin: 0;
+    color: #bb86fc;
+}
+
+.user-id {
+    font-size: 0.9em;
+}
+
+.user-status {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #bb86fc;
+}
+
+input:checked + .slider:before {
+    transform: translateX(14px);
+}
+
+.status-label {
+    margin: 0;
+    color: #e0e0e0;
+}
+
+/* General Body Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #e0e0e0;
+    background-color: #121212;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes at least full viewport height */
+}
+
+/* Page Wrapper */
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the wrapper takes at least full viewport height */
+}
+
+/* Header Styles */
+header {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header nav a {
+    color: #e0e0e0;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: #bb86fc;
+}
+
+/* Main Content Styles */
+main {
+    padding: 80px 20px 20px; /* Adjusted padding to ensure content is visible */
+    flex: 1; /* Allows main to take remaining space */
+}
+
+/* Content Container Styles */
+.content-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    position: relative;
+}
+
+/* Footer Styles */
+footer {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    padding: 15px 0;
+    text-align: center;
+    width: 100%;
+}
