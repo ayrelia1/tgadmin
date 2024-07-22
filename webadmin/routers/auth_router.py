@@ -33,7 +33,7 @@ async def login(request: Request, username: str = Form(...), password: str = For
         key="session_token",
         value=encrypted_token,
         httponly=True,
-        secure=True,
+        secure=False,
         samesite="Lax",
         max_age=settings.SESSION_EXPIRATION_TIME
     )

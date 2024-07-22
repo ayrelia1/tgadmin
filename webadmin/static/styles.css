@@ -384,3 +384,17 @@ footer {
     text-align: center;
     width: 100%;
 }
+
+/* Переходы для плавного появления */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.fade-in.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Другие стили остаются без изменений */

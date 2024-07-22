@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const status = this.checked ? 'enabled' : 'disabled';
 
             // Отправить запрос на сервер
-            fetch(`/update-status/${userId}/`, {
+            fetch(`/update_status/${userId}/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

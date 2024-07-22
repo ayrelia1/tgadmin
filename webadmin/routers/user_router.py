@@ -1,5 +1,7 @@
-from fastapi import APIRouter, Request, Depends, Cookie, HTTPException
-from fastapi.responses import HTMLResponse, RedirectResponse
+import math
+from fastapi import APIRouter, Query, Request, Depends, Cookie, HTTPException
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
+from sqlalchemy import func
 from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime
 from db import crud
@@ -38,19 +40,73 @@ async def profile(request: Request, user: User = Depends(get_authenticated_user)
 
 
 @user_router.get("/users", response_class=HTMLResponse)
-async def profile(request: Request, user: User = Depends(get_authenticated_user)):
+async def profile(
+    request: Request, 
+    user: User = Depends(get_authenticated_user), 
+    page: int = Query(1, alias='page', ge=1)
+):
+    ITEMS_PER_PAGE = 12
+    PAGINATION_BUTTONS = 10
+    
     async with async_session() as db_session:
-        # Создаем запрос для выборки всех пользователей
-        stmt = select(UserTg)
+        # Подсчитываем общее количество пользователей
+        total_users = await db_session.execute(select(func.count(UserTg.id)))
+        total_users = total_users.scalar_one()
+        total_pages = (total_users + ITEMS_PER_PAGE - 1) // ITEMS_PER_PAGE
+
+        # Вычисляем смещение и лимит
+        offset = (page - 1) * ITEMS_PER_PAGE
+
+        # Создаем запрос с сортировкой по id
+        stmt = select(UserTg).order_by(UserTg.id).offset(offset).limit(ITEMS_PER_PAGE)
         result = await db_session.execute(stmt)
-        # Получаем все строки
         users = result.scalars().all()
+
+    # Определяем страницы для отображения пагинации
+    start_page = max(1, page - PAGINATION_BUTTONS // 2)
+    end_page = min(total_pages, start_page + PAGINATION_BUTTONS - 1)
+    start_page = max(1, end_page - PAGINATION_BUTTONS + 1)
+
+    return templates.TemplateResponse(
+        "users.html", 
+        {
+            "request": request, 
+            "user": user, 
+            "users": users, 
+            "current_page": page, 
+            "total_pages": total_pages,
+            "start_page": start_page,
+            "end_page": end_page
+        }
+    )
+
+
+
+@user_router.post("/update_status/{user_id}", response_class=HTMLResponse)
+async def update_status(
+    request: Request, 
+    user_id: int,
+    user: User = Depends(get_authenticated_user)
+):
+    async with async_session() as db_session:
+        # Выполняем запрос для поиска пользователя по user_id
+        result = await db_session.execute(select(UserTg).filter(UserTg.id == user_id))
+        user_record = result.scalars().first()
+
+        if not user_record:
+            raise HTTPException(status_code=404, detail="User not found")
         
-
-    return templates.TemplateResponse("users.html", {"request": request, "user": user, "users": users})
-
-
-
+        # Изменяем поле has_access
+        if user_record.has_access == True:
+            user_record.has_access = False
+        else: 
+            user_record.has_access = True
+            
+        # Сохраняем изменения
+        db_session.add(user_record)
+        await db_session.commit()
+        return JSONResponse(content={"status": "success"})
+        
 
 @user_router.get("/logout", response_class=HTMLResponse)
 async def logout(request: Request, session_token: str = Cookie(None)):

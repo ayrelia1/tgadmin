@@ -1,4 +1,7 @@
-from cryptography.fernet import Fernet
+import requests
 
-key = Fernet.generate_key()
-print(key.decode())  # Сохраните этот ключ
+
+
+link = 'http://127.0.0.1:8000/update_status/2'
+
+print(requests.post(link).text)
