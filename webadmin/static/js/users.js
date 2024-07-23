@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         newsletterForm.addEventListener("submit", async (event) => {
             event.preventDefault();
             const message = newsletterMessageInput.value;
-
+    
             try {
                 const response = await fetch(`/send-newsletter`, {
                     method: "POST",
@@ -30,17 +30,26 @@ document.addEventListener('DOMContentLoaded', function() {
                     },
                     body: JSON.stringify({ message: message })
                 });
-
+    
+                // Парсим JSON-ответ
+                const result = await response.json();
+    
                 if (response.ok) {
                     alert("Рассылка отправлена успешно!");
                     if (newsletterModal) {
                         newsletterModal.classList.remove("show"); // Скрыть модальное окно
                     }
                 } else {
-                    console.error("Failed to send newsletter");
+                    // Показать сообщение об ошибке, если оно есть
+                    const errorMessage = result.message || "Произошла ошибка, рассылка не была начата";
+                    alert(`Ошибка: ${errorMessage}`);
+                    if (newsletterModal) {
+                        newsletterModal.classList.remove("show"); // Скрыть модальное окно
+                    }
                 }
             } catch (error) {
                 console.error("Error:", error);
+                alert("Произошла ошибка при отправке запроса.");
             }
         });
     }

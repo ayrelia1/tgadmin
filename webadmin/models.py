@@ -2,6 +2,11 @@
 from pydantic import BaseModel, field_validator
 import re
 
+
+
+class NewsletterRequest(BaseModel):
+    message: str
+
 class UserLogin(BaseModel):
     username: str
     password: str

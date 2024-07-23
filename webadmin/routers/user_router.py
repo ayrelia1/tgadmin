@@ -1,17 +1,20 @@
 import math
-from fastapi import APIRouter, Query, Request, Depends, Cookie, HTTPException
+from fastapi import APIRouter, Body, Form, Query, Request, Depends, Cookie, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from sqlalchemy import func
 from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime
 from db import crud
 from db.db import async_session
-from function import decrypt_token, get_authenticated_user
+from function import decrypt_token, get_authenticated_user, send_newsletter
 from config import templates
 from db.models import User
 from sqlalchemy.future import select
 import sys
 import os
+import asyncio
+import logging
+from models import NewsletterRequest
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
@@ -107,6 +110,25 @@ async def update_status(
         db_session.add(user_record)
         await db_session.commit()
         return JSONResponse(content={"status": "success"})
+        
+        
+        
+
+@user_router.post("/send-newsletter", response_class=JSONResponse)
+async def newsletter(
+    request: NewsletterRequest,  # Используем Pydantic модель
+    user: User = Depends(get_authenticated_user)
+):
+    async with async_session() as db_session:
+        try:
+            asyncio.create_task(send_newsletter(str(request.message), db_session))
+        except Exception as ex:
+            logging.error(ex)
+            return JSONResponse(content={"status": f"error", "message": f"error - {ex}"}, status_code=501)
+        
+    return JSONResponse(content={"status": "success"}, status_code=200)
+    
+        
         
 
 @user_router.get("/logout", response_class=HTMLResponse)
