@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Отделы{% endblock %}
+
+{% block extra_head %}
+<script src="/static/js/otdels.js" defer></script>
+<script src="/static/js/users.js" defer></script>
+<link rel="stylesheet" href="/static/css/common.css">
+<link rel="stylesheet" href="/static/css/otdels.css">
+<link rel="stylesheet" href="/static/css/users.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="header-container">
+    <h1>Отделы</h1>
+    <button id="create-button" class="create-button">Создать вопрос</button>
+</div>
+
+<div class="user-cards-container">
+    {% for question in questions %}
+    <div class="user-card">
+        <div class="user-card-header">
+            <h3 class="user-id">ID: {{ question.id }}</h3>
+            <h2 class="user-username">{{ question.name }}</h2>
+        </div>
+        <div class="user-actions">
+            <button class="edit-button" data-otdel-id="{{ question.id }}" data-otdel-name="{{ question.name }}">Изменить</button>
+            <button class="delete-button" data-otdel-id="{{ question.id }}">Удалить</button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% include 'pagination.html' %}
+
+
+
+{% endblock %}
+
+

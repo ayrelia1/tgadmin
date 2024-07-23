@@ -4,17 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Admin Panel{% endblock %}</title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/css/modal.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    
     {% block extra_head %}
     {% endblock %}
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const contentContainer = document.querySelector(".content-container");
-            // Добавляем класс show с небольшой задержкой
+            const menuToggle = document.querySelector(".menu-toggle");
+            const navLinks = document.querySelector("nav");
+            
             setTimeout(() => {
                 contentContainer.classList.add("show");
-            }, 100); // Увеличенная задержка для лучшего эффекта
+            }, 100);
+
+            menuToggle.addEventListener("click", () => {
+                navLinks.classList.toggle("open");
+            });
         });
     </script>
 </head>
@@ -23,8 +31,11 @@
         <header>
             <div class="container">
                 <h1>Admin Panel</h1>
+                <button class="menu-toggle">&#9776;</button>
                 <nav>
                     {% if user %}
+                        <a href="/questions" class="nav-link">Вопросы</a>
+                        <a href="/otdels" class="nav-link">Отделы</a>
                         <a href="/users" class="nav-link">Пользователи</a>
                         <a href="/profile" class="nav-link">Профиль</a>
                         <a href="/logout" class="nav-link">Выйти</a>
@@ -45,7 +56,47 @@
                 <p>&copy; 2024 Admin Panel. All rights reserved.</p>
             </div>
         </footer>
-    </div>
-    <script src="/static/scripts.js"></script>
+        
+        <!-- Модальное окно для редактирования отдела -->
+        <div id="edit-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" data-modal-id="edit-modal">&times;</span>
+                <h2 id="modal-title">Изменить отдел</h2>
+                <form id="edit-form">
+                    <label for="edit-name">Название отдела:</label>
+                    <input type="text" id="edit-name" name="name" required>
+                    <input type="hidden" id="edit-id" name="id">
+                    <button type="submit" class="save-button">Сохранить</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Модальное окно для создания нового отдела -->
+        <div id="create-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" data-modal-id="create-modal">&times;</span>
+                <h2 id="create-title">Создать новый отдел</h2>
+                <form id="create-form">
+                    <label for="create-name">Название отдела:</label>
+                    <input type="text" id="create-name" name="name" required>
+                    <button type="submit" class="save-button">Создать</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Модальное окно для рассылки -->
+        <div id="newsletter-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" data-modal-id="newsletter-modal">&times;</span>
+                <h2 id="newsletter-title">Рассылка</h2>
+                <form id="newsletter-form">
+                    <label for="newsletter-message">Сообщение:</label>
+                    <textarea id="newsletter-message" name="message" rows="4" required></textarea>
+                    <button type="submit" class="save-button">Отправить</button>
+                </form>
+            </div>
+        </div>
+
+    <script src="/static/js/scripts.js"></script>
 </body>
 </html>

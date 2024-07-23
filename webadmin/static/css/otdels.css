@@ -1,0 +1,163 @@
+/* Общие стили для страницы */
+.page-wrapper {
+    position: relative;
+}
+
+/* Контейнер для заголовка и кнопки создания */
+.header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.header-container h1 {
+    display: block;
+    font-size: 2em; /* Основной размер шрифта для заголовка */
+}
+
+/* Кнопка создания отдела */
+.create-button {
+    background: linear-gradient(135deg, #bb86fc, #9a67ea);
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    font-size: 16px;
+    font-weight: bold; /* Сделаем текст жирным для лучшего выделения */
+    position: relative; /* Для добавления эффекта обводки */
+    overflow: hidden; /* Чтобы содержимое не выходило за границы */
+}
+
+.create-button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.4s ease;
+    z-index: 0;
+}
+
+.create-button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.create-button:hover {
+    background: linear-gradient(135deg, #9a67ea, #bb86fc);
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.create-button span {
+    position: relative;
+    z-index: 1; /* Чтобы текст был над эффектом обводки */
+}
+
+/* Общие стили для карточек отдела */
+.user-card {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+}
+
+.user-card-header {
+    margin-bottom: 15px;
+}
+
+.user-card-header h2 {
+    margin: 0;
+    color: #bb86fc;
+}
+
+/* Стили кнопок */
+.user-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.delete-button, .edit-button {
+    background: linear-gradient(135deg, #bb86fc, #9a67ea);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    font-size: 16px;
+}
+
+.delete-button:hover, .edit-button:hover {
+    background: linear-gradient(135deg, #9a67ea, #bb86fc);
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Медиазапросы для мобильных устройств */
+@media (max-width: 768px) {
+    .header-container h1 {
+        font-size: 1.8em; /* Уменьшенный размер шрифта для заголовка на мобильных устройствах */
+    }
+
+    .create-button {
+        font-size: 14px; /* Уменьшенный размер шрифта для кнопки */
+        padding: 10px 15px; /* Уменьшенные отступы для кнопки */
+    }
+
+    .user-card {
+        padding: 15px; /* Уменьшенные отступы внутри карточек */
+    }
+
+    .user-card-header h2 {
+        font-size: 1.1em; /* Уменьшенный размер шрифта для заголовков в карточках */
+    }
+
+    .delete-button, .edit-button {
+        font-size: 14px; /* Уменьшенный размер шрифта для кнопок */
+        padding: 10px 15px; /* Уменьшенные отступы для кнопок */
+    }
+}
+
+/* Медиазапросы для экстра маленьких экранов (например, телефоны в портретном режиме) */
+@media (max-width: 480px) {
+    .header-container h1 {
+        font-size: 1.5em; /* Еще больше уменьшение размера шрифта для заголовка */
+    }
+
+    .create-button {
+        font-size: 12px; /* Еще более уменьшенный размер шрифта для кнопки */
+        padding: 8px 12px; /* Еще более уменьшенные отступы для кнопки */
+    }
+
+    .user-card {
+        padding: 10px; /* Еще более уменьшенные отступы внутри карточек */
+    }
+
+    .user-card-header h2 {
+        font-size: 1em; /* Еще более уменьшенный размер шрифта для заголовков в карточках */
+    }
+
+    .delete-button, .edit-button {
+        font-size: 12px; /* Еще более уменьшенный размер шрифта для кнопок */
+        padding: 8px 12px; /* Еще более уменьшенные отступы для кнопок */
+    }
+}

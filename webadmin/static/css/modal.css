@@ -1,0 +1,134 @@
+/* Стили модальных окон */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+/* Слой фона для размытия */
+.modal::before {
+    content: "";
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Полупрозрачный фон */
+    backdrop-filter: blur(8px); /* Легкий эффект блюра */
+    z-index: -1; /* Под модальным окном */
+}
+
+.modal-content {
+    background-color: #1e1e1e; /* Тёмно-серый фон для карточки */
+    padding: 20px;
+    border: 1px solid #333;
+    width: calc(100% - 40px); /* Оставить место для отступов */
+    max-width: 500px;
+    border-radius: 15px; /* Закругленные углы */
+    color: #e0e0e0; /* Светлый текст */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    backdrop-filter: blur(10px); /* Легкий эффект блюра */
+    box-sizing: border-box; /* Учесть padding и border в ширине */
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}
+
+.close-button {
+    color: #e0e0e0;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #bb86fc;
+    text-decoration: none;
+}
+
+/* Стили для форм */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-bottom: 10px;
+    color: #e0e0e0;
+}
+
+form input[type="text"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    resize: none;
+    box-sizing: border-box; /* Учесть padding и border в ширине */
+}
+
+form input[type="text"]:focus,
+form textarea:focus {
+    outline: none;
+    border-color: #bb86fc;
+    background-color: #3a3a3a;
+}
+
+/* Стили для кнопок */
+.save-button {
+    background-color: #bb86fc;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    align-self: flex-end;
+}
+
+.save-button:hover {
+    background-color: #9a67ea;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Стили кнопок для создания отдела и рассылки */
+#create-button,
+#newsletter-button {
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#create-button:hover,
+#newsletter-button:hover {
+    background-color: #3700b3;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}

@@ -15,7 +15,8 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
-from bot.db.models import UserTg
+from bot.db.models import UserTg, Otdels, Questions
+
 
 user_router = APIRouter()
 
@@ -40,7 +41,7 @@ async def profile(request: Request, user: User = Depends(get_authenticated_user)
 
 
 @user_router.get("/users", response_class=HTMLResponse)
-async def profile(
+async def users(
     request: Request, 
     user: User = Depends(get_authenticated_user), 
     page: int = Query(1, alias='page', ge=1)

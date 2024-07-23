@@ -9,6 +9,8 @@ from function import encrypt_token, get_current_user
 from config import templates
 from db.models import User
 from schemas import UserLogin
+from pydantic import ValidationError
+
 
 auth_router = APIRouter()
 
@@ -50,12 +52,17 @@ async def register(request: Request, username: str = Form(...), password: str = 
     if not username or not password or not full_name:
         return templates.TemplateResponse("register.html", {"request": request, "error": "Заполните все поля!"})
 
+    try:
+        user = UserCreate(username=username, password=password, full_name=full_name)
+    except ValidationError as e:
+        error_text = e.errors()[0]['msg'].split('Value error, ')[1]
+        return templates.TemplateResponse("register.html", {"request": request, "error": error_text})
+
     async with async_session() as db_session:
         existing_user = await crud.get_user_by_username(db_session, username)
         if existing_user:
             return templates.TemplateResponse("register.html", {"request": request, "error": "Такой логин уже есть!"})
 
-        user = UserCreate(username=username, password=password, full_name=full_name)
         await crud.create_user(db_session, user)
 
     return RedirectResponse(url="/login", status_code=303)

@@ -15,31 +15,47 @@ body {
 header {
     background: #1e1e1e;
     color: #e0e0e0;
-    padding: 15px 0;
+    padding: 20px 0; /* Increased padding */
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4); /* Increased shadow */
 }
 
 header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 30px; /* Increased padding */
 }
 
 header h1 {
     margin: 0;
+    font-size: 1.8em; /* Increased font size */
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 28px; /* Increased font size */
+    background: none;
+    border: none;
+    color: #e0e0e0;
+    cursor: pointer;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
 }
 
 header nav a {
     color: #e0e0e0;
     text-decoration: none;
-    margin: 0 15px;
+    margin: 0 20px; /* Increased margin */
     font-weight: bold;
+    font-size: 1.1em; /* Increased font size */
     transition: color 0.3s ease;
 }
 
@@ -47,25 +63,64 @@ header nav a:hover {
     color: #bb86fc;
 }
 
+header nav.open {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    header nav {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    header nav.open {
+        display: flex;
+        position: absolute;
+        top: 80px; /* Adjusted position */
+        left: 0;
+        background: #1e1e1e;
+        width: 100%;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4); /* Increased shadow */
+    }
+
+    header nav a {
+        margin: 15px 0; /* Increased margin */
+        width: 100%;
+        padding: 15px 20px; /* Increased padding */
+        box-sizing: border-box;
+        font-size: 1.2em; /* Increased font size */
+    }
+}
+
 /* Main Content Styles */
 main {
-    padding: 80px 20px 20px; /* Adjusted padding to ensure content is visible */
+    padding: 100px 30px 30px; /* Increased padding */
     flex: 1; /* Allows main to take remaining space */
 }
 
 .content-container {
-    max-width: 600px;
+    max-width: 1060px; /* Increased max width */
     margin: auto;
-    padding: 20px;
+    padding: 30px; /* Increased padding */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: relative;
 }
 
 /* Form Container Styles */
 .form-container, .profile-container {
     background: #1e1e1e;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 30px; /* Increased padding */
+    border-radius: 12px; /* Increased border radius */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6); /* Increased shadow */
+    min-width: 50%;
     position: relative;
     animation: fadeIn 0.5s ease-in;
 }
@@ -74,6 +129,7 @@ main {
 h2 {
     margin-top: 0;
     color: #bb86fc;
+    font-size: 1.5em; /* Increased font size */
 }
 
 /* Form Styles */
@@ -83,17 +139,19 @@ form {
 }
 
 form label {
-    margin: 10px 0 5px;
+    margin: 15px 0 10px; /* Increased margin */
     color: #e0e0e0;
+    font-size: 1.1em; /* Increased font size */
 }
 
 form input {
-    padding: 12px;
-    margin-bottom: 10px;
+    padding: 15px; /* Increased padding */
+    margin-bottom: 15px; /* Increased margin */
     border: 1px solid #333;
-    border-radius: 5px;
+    border-radius: 8px; /* Increased border radius */
     background: #333;
     color: #e0e0e0;
+    font-size: 1em; /* Increased font size */
     transition: border-color 0.3s ease;
 }
 
@@ -103,27 +161,27 @@ form input:focus {
 }
 
 form button {
-    padding: 12px;
+    padding: 15px; /* Increased padding */
     background-color: #bb86fc;
     border: none;
     color: #fff;
-    border-radius: 5px;
+    border-radius: 8px; /* Increased border radius */
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px; /* Increased font size */
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 form button:hover {
     background-color: #9a67ea;
     transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Increased shadow */
 }
 
 .alert {
-    padding: 15px;
-    margin-bottom: 20px;
+    padding: 20px; /* Increased padding */
+    margin-bottom: 25px; /* Increased margin */
     border: 1px solid transparent;
-    border-radius: 4px;
+    border-radius: 6px; /* Increased border radius */
     display: none; /* По умолчанию скрыт */
 }
 
@@ -141,37 +199,38 @@ form button:hover {
 
 /* Profile Container Styles */
 .profile-info p {
-    margin: 15px 0;
+    margin: 20px 0; /* Increased margin */
     color: #e0e0e0;
+    font-size: 1.2em; /* Increased font size */
 }
 
 .profile-action {
-    margin-top: 20px;
+    margin-top: 30px; /* Increased margin */
 }
 
 .logout-button {
     display: inline-block;
-    padding: 12px 20px;
+    padding: 15px 25px; /* Increased padding */
     background-color: #bb86fc;
     color: #fff;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 8px; /* Increased border radius */
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .logout-button:hover {
     background-color: #9a67ea;
     transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Increased shadow */
 }
 
 /* Profile Card Styles */
 .profile-card {
     background: #333;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 30px; /* Increased padding */
+    border-radius: 12px; /* Increased border radius */
+    margin-top: 30px; /* Increased margin */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6); /* Increased shadow */
     color: #e0e0e0;
 }
 
@@ -179,9 +238,10 @@ form button:hover {
 footer {
     background: #1e1e1e;
     color: #e0e0e0;
-    padding: 15px 0;
+    padding: 20px 0; /* Increased padding */
     text-align: center;
     width: 100%;
+    font-size: 1.2em; /* Increased font size */
 }
 
 /* Index Page Styles */
@@ -192,10 +252,12 @@ footer {
 
 .index-container h2 {
     color: #bb86fc;
+    font-size: 2em; /* Increased font size */
 }
 
 .index-container p {
-    margin: 10px 0;
+    margin: 15px 0; /* Increased margin */
+    font-size: 1.2em; /* Increased font size */
 }
 
 /* Keyframes */
@@ -219,49 +281,50 @@ footer {
 .user-cards-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 30px; /* Increased gap */
     justify-content: center;
 }
 
 .user-card {
     background: #1e1e1e;
     color: #e0e0e0;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    width: 300px;
+    border-radius: 12px; /* Increased border radius */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6); /* Increased shadow */
+    padding: 30px; /* Increased padding */
+    width: 320px; /* Increased width */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .user-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+    transform: scale(1.03);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7); /* Increased shadow */
 }
 
 .user-card-header {
-    margin-bottom: 15px;
+    margin-bottom: 20px; /* Increased margin */
 }
 
 .user-card-header h2 {
     margin: 0;
     color: #bb86fc;
+    font-size: 1.4em; /* Increased font size */
 }
 
 .user-id {
-    font-size: 0.9em;
+    font-size: 1em; /* Increased font size */
 }
 
 .user-status {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 20px; /* Increased gap */
 }
 
 .switch {
     position: relative;
     display: inline-block;
-    width: 34px;
-    height: 20px;
+    width: 40px; /* Increased width */
+    height: 24px; /* Increased height */
 }
 
 .switch input {
@@ -279,14 +342,14 @@ footer {
     bottom: 0;
     background-color: #ccc;
     transition: .4s;
-    border-radius: 20px;
+    border-radius: 24px; /* Increased border radius */
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 12px;
-    width: 12px;
+    height: 16px; /* Increased height */
+    width: 16px; /* Increased width */
     border-radius: 50%;
     left: 4px;
     bottom: 4px;
@@ -299,7 +362,7 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-    transform: translateX(14px);
+    transform: translateX(16px); /* Adjusted transform */
 }
 
 .status-label {
@@ -314,91 +377,11 @@ input:checked + .slider:before {
     min-height: 100vh; /* Ensure the wrapper takes at least full viewport height */
 }
 
-/* Footer Styles */
-footer {
-    background: #1e1e1e;
-    color: #e0e0e0;
-    padding: 15px 0;
-    text-align: center;
-    width: 100%;
-}
-
-/* Переходы для плавного появления */
 .fade-in {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    animation: fadeIn 0.5s ease-in forwards;
 }
 
-.fade-in.show {
+.show {
     opacity: 1;
-    transform: translateY(0);
-}
-
-/* Медиа-запросы для мобильных устройств */
-@media (max-width: 768px) {
-    header .container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    header nav {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    header nav a {
-        margin: 10px 0;
-    }
-
-    .content-container {
-        padding: 10px;
-    }
-
-    .form-container, .profile-container, .user-card {
-        padding: 15px;
-    }
-
-    .user-cards-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .user-card {
-        width: 100%;
-    }
-}
-
-/* Медиа-запросы для очень маленьких устройств */
-@media (max-width: 480px) {
-    header h1 {
-        font-size: 1.5em;
-    }
-
-    header nav a {
-        font-size: 0.9em;
-    }
-
-    form input, form button {
-        font-size: 0.9em;
-    }
-
-    .logout-button {
-        padding: 10px 15px;
-        font-size: 0.9em;
-    }
-
-    .user-card-header h2 {
-        font-size: 1.2em;
-    }
-
-    .user-status {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .status-label {
-        font-size: 0.9em;
-    }
 }
