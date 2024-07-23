@@ -129,3 +129,57 @@ input:checked + .slider:before {
     background-color: #bb86fc;
     pointer-events: none;
 }
+
+/* Медиа-запросы для мобильных устройств */
+@media (max-width: 768px) {
+    .user-cards-container {
+        grid-template-columns: repeat(2, 1fr); /* Две колонки на планшетах */
+    }
+
+    .user-card {
+        padding: 15px;
+    }
+}
+
+/* Медиа-запросы для очень маленьких устройств */
+@media (max-width: 480px) {
+    .user-cards-container {
+        grid-template-columns: 1fr; /* Одна колонка на мобильных устройствах */
+    }
+
+    .user-card {
+        padding: 10px;
+    }
+
+    .user-card-header {
+        margin-bottom: 10px;
+    }
+
+    .user-id {
+        font-size: 12px;
+    }
+
+    .user-username {
+        font-size: 18px;
+    }
+
+    .status-label {
+        font-size: 14px;
+    }
+
+    .switch {
+        width: 50px;
+        height: 25px;
+    }
+
+    .slider:before {
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(25px);
+    }
+}

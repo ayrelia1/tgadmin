@@ -307,73 +307,11 @@ input:checked + .slider:before {
     color: #e0e0e0;
 }
 
-/* General Body Styles */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #e0e0e0;
-    background-color: #121212;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Ensure the body takes at least full viewport height */
-}
-
 /* Page Wrapper */
 .page-wrapper {
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* Ensure the wrapper takes at least full viewport height */
-}
-
-/* Header Styles */
-header {
-    background: #1e1e1e;
-    color: #e0e0e0;
-    padding: 15px 0;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-}
-
-header h1 {
-    margin: 0;
-}
-
-header nav a {
-    color: #e0e0e0;
-    text-decoration: none;
-    margin: 0 15px;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-header nav a:hover {
-    color: #bb86fc;
-}
-
-/* Main Content Styles */
-main {
-    padding: 80px 20px 20px; /* Adjusted padding to ensure content is visible */
-    flex: 1; /* Allows main to take remaining space */
-}
-
-/* Content Container Styles */
-.content-container {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    position: relative;
 }
 
 /* Footer Styles */
@@ -397,4 +335,70 @@ footer {
     transform: translateY(0);
 }
 
-/* Другие стили остаются без изменений */
+/* Медиа-запросы для мобильных устройств */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header nav {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header nav a {
+        margin: 10px 0;
+    }
+
+    .content-container {
+        padding: 10px;
+    }
+
+    .form-container, .profile-container, .user-card {
+        padding: 15px;
+    }
+
+    .user-cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .user-card {
+        width: 100%;
+    }
+}
+
+/* Медиа-запросы для очень маленьких устройств */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    header nav a {
+        font-size: 0.9em;
+    }
+
+    form input, form button {
+        font-size: 0.9em;
+    }
+
+    .logout-button {
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
+
+    .user-card-header h2 {
+        font-size: 1.2em;
+    }
+
+    .user-status {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .status-label {
+        font-size: 0.9em;
+    }
+}
