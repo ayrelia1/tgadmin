@@ -1,3 +1,5 @@
+from logging.handlers import RotatingFileHandler
+import os
 from config import dp, logging, bot, Bot, current_directory, root_path
 from aiogram.types import BotCommand, BotCommandScopeDefault
 
@@ -42,10 +44,33 @@ async def dispose(bot: Bot):
                 
 
 async def main() -> None:     # функция запуска бота
-    logging.basicConfig(level=logging.INFO,
-                        format="%(asctime)s - [%(levelname)s] - %(name)s - "
-                               "(%(filename)s).%(funcName)s(%(lineno)d) - %(message)s" 
-                        ) # логирование
+    log_dir = '/app/logs'
+    os.makedirs(log_dir, exist_ok=True)  # Создать директорию, если не существует
+    log_file = os.path.join(log_dir, 'app_bot.log')
+    
+    # Создать форматтер
+    formatter = logging.Formatter('%(asctime)s - [%(levelname)s] - %(name)s - '
+                                  '(%(filename)s).%(funcName)s(%(lineno)d) - %(message)s')
+    
+    logging.getLogger("requests").setLevel(logging.WARNING)
+    logging.getLogger("apscheduler").setLevel(logging.WARNING)
+    # Настроить основной логгер
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    
+    # Создать обработчик для ротации логов
+    file_handler = RotatingFileHandler(log_file, maxBytes=10*1024*1024, backupCount=5)
+    file_handler.setLevel(logging.INFO)
+    file_handler.setFormatter(formatter)
+    
+        # Создать консольный обработчик
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+    console_handler.setFormatter(formatter)
+    
+    # Добавить обработчики к логгеру
+    logger.addHandler(file_handler)
+    logger.addHandler(console_handler)
     
 
 
