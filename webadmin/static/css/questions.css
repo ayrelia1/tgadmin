@@ -7,9 +7,8 @@
 /* Контейнер для заголовка и кнопки создания */
 .header-container {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px; /* Расстояние между заголовком и другими элементами */
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
     width: 100%;
 }
@@ -23,9 +22,10 @@
 
 /* Контейнер для выбора отдела */
 .select-container {
+    flex: 1; /* Занимает оставшееся пространство */
     display: flex;
-    flex-direction: column; /* Упорядочивает метку и выбор по вертикали */
-    width: 100%;
+    justify-content: center; /* Выравнивание по центру */
+    margin: 0 20px; /* Отступы слева и справа */
 }
 
 /* Выпадающий список выбора отдела */
@@ -34,9 +34,8 @@
     color: #e0e0e0;
     border: 1px solid #bb86fc;
     border-radius: 8px;
-    padding: 12px; /* Увеличены отступы для улучшения удобства */
-    font-size: 1em; /* Размер шрифта для лучшего восприятия */
-    width: 100%; /* Занимает полную ширину контейнера */
+    padding: 10px; /* Уменьшены отступы для улучшения удобства */
+    font-size: 0.9em; /* Уменьшен размер шрифта для лучшего восприятия */
     box-sizing: border-box; /* Учитывает отступы в ширине */
 }
 
@@ -45,17 +44,16 @@
     background: linear-gradient(135deg, #bb86fc, #9a67ea);
     color: #fff;
     border: none;
-    padding: 12px 20px;
+    padding: 10px 15px;
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     position: relative;
     overflow: hidden;
-    width: 100%; /* Занимает полную ширину контейнера */
-    box-sizing: border-box; /* Учитывает отступы в ширине */
+    text-align: center; /* Центрирование текста */
 }
 
 /* Псевдо-элемент для кнопки создания */
@@ -89,13 +87,13 @@
     z-index: 1;
 }
 
-/* Общие стили для карточек отдела */
+/* Общие стили для карточек вопроса */
 .user-card {
     background: #1e1e1e;
     color: #e0e0e0;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    padding: 20px;
+    padding: 15px; /* Уменьшены отступы для карточек */
     margin-bottom: 20px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -107,12 +105,13 @@
 }
 
 .user-card-header {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .user-card-header h2 {
     margin: 0;
     color: #bb86fc;
+    font-size: 1.1em; /* Уменьшен размер шрифта заголовка карточки */
 }
 
 /* Стили кнопок */
@@ -125,12 +124,12 @@
     background: linear-gradient(135deg, #bb86fc, #9a67ea);
     color: white;
     border: none;
-    padding: 12px 20px;
+    padding: 10px 15px; /* Уменьшены отступы для кнопок */
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    font-size: 16px;
+    font-size: 14px; /* Уменьшен размер шрифта для кнопок */
     text-align: center; /* Центрирование текста */
 }
 
@@ -178,6 +177,11 @@
 
 /* Медиазапросы для экстра маленьких экранов (например, телефоны в портретном режиме) */
 @media (max-width: 480px) {
+    .header-container {
+        flex-direction: column;
+        align-items: center; /* Центрирование элементов */
+    }
+
     .header-container h1 {
         font-size: 1.5em;
     }
@@ -203,23 +207,5 @@
     .select-container select {
         padding: 10px; /* Уменьшены отступы для маленьких экранов */
         font-size: 0.9em; /* Уменьшенный размер шрифта для маленьких экранов */
-    }
-
-    /* Позиционирование текста и контейнеров для очень маленьких экранов */
-    .header-container {
-        position: relative;
-        align-items: center; /* Центрирование элементов */
-        text-align: center; /* Выравнивание текста по центру */
-        padding-top: 20px; /* Отступ сверху для текстов */
-    }
-
-    .header-container h1 {
-        position: absolute;
-        top: 10%; /* Немного выше центра */
-        left: 50%;
-        transform: translate(-50%, -50%); /* Центрирование по горизонтали и немного выше по вертикали */
-        font-size: 1.3em;
-        margin: 0; /* Убираем внешние отступы */
-        width: 100%; /* Ширина 100% для центрирования */
     }
 }
