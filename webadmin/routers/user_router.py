@@ -83,25 +83,22 @@ async def users(
 async def update_status(
     request: Request, 
     user_id: int,
-    user: User = Depends(get_authenticated_user)
+    user: User = Depends(get_user_with_access)
 ):
+    logging.info(f"Received request to update status for user_id: {user_id}")
     async with async_session() as db_session:
-        # Выполняем запрос для поиска пользователя по user_id
         result = await db_session.execute(select(UserTg).filter(UserTg.id == user_id))
         user_record = result.scalars().first()
 
         if not user_record:
             raise HTTPException(status_code=404, detail="User not found")
         
-        # Изменяем поле has_access
-        if user_record.has_access == True:
-            user_record.has_access = False
-        else: 
-            user_record.has_access = True
-            
-        # Сохраняем изменения
+        user_record.has_access = not user_record.has_access
+        
         db_session.add(user_record)
         await db_session.commit()
+        
+        logging.info(f"Successfully updated status for user_id: {user_id}")
         return JSONResponse(content={"status": "success"})
         
         
