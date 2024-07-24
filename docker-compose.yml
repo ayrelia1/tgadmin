@@ -47,7 +47,7 @@ services:
     depends_on:
       - site
     volumes:
-      - ./files/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
 
 volumes:
   postgres-data:
