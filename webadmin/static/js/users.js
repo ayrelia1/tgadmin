@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const status = this.checked ? 'enabled' : 'disabled';
 
             try {
-                const response = await fetch(`/update_status/${userId}/`, {
+                const response = await fetch(`/update_status/${userId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

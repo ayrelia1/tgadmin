@@ -10,6 +10,23 @@ from routers import routers
 from config import app
 from db.models import create_tables
 from db.db import engine
+from starlette.middleware.cors import CORSMiddleware
+
+# Настройка CORS
+orig_origins = [
+    "http://localhost",
+    "http://localhost:8000",
+    "http://localhost:8004",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=orig_origins,  # список разрешенных доменов
+    allow_credentials=True,
+    allow_methods=["POST", "PUT", "GET", "DELETE"],  # Разрешить все методы HTTP (GET, POST, PUT, DELETE и т.д.)
+    allow_headers=["*"],  # Разрешить все заголовки
+)
+
 
 
 @app.exception_handler(NotAuthenticatedException)
