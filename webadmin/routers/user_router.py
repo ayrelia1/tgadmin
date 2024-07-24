@@ -83,7 +83,7 @@ async def users(
 async def update_status(
     request: Request, 
     user_id: int,
-    user: User = Depends(get_user_with_access)
+    user: User = Depends(get_authenticated_user)
 ):
     async with async_session() as db_session:
         # Выполняем запрос для поиска пользователя по user_id
