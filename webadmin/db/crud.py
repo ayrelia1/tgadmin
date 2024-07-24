@@ -1,3 +1,4 @@
+from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import joinedload
@@ -7,6 +8,14 @@ from schemas import UserCreate, UserInDB
 import secrets
 from sqlalchemy import delete
 from passlib.context import CryptContext
+from models import CreateUpdateOtdel
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+
+from bot.db.models import Otdels, Questions
+
+
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -49,9 +58,72 @@ async def get_session_by_token(db_session: AsyncSession, session_token: str) -> 
         return None
     return session
 
-async def delete_session(db_session: AsyncSession, session_token: str):
+async def delete_session(db_session: AsyncSession, session_token: str) -> None:
     result = await db_session.execute(select(Session).filter_by(session_token=session_token))
     session_to_delete = result.scalars().first()
     if session_to_delete:
         await db_session.execute(delete(Session).where(Session.id == session_to_delete.id))
         await db_session.commit()
+        
+        
+async def create_otdel(db_session: AsyncSession, otdel: CreateUpdateOtdel) -> Otdels:
+    new_otdel = Otdels(name=otdel.name)
+    db_session.add(new_otdel)
+    await db_session.commit()
+    return new_otdel
+
+async def delete_otdel(db_session: AsyncSession, otdel_id: int):
+    async with db_session.begin():  # Начало транзакции
+        try:
+            query = select(Otdels).where(Otdels.id == otdel_id)
+            result = await db_session.execute(query)
+            otdel = result.scalar_one_or_none()
+            
+            if not otdel:
+                return JSONResponse(
+                    content={"status": "error", "message": "Otdel not found"},
+                    status_code=404
+                )
+
+            await db_session.delete(otdel)  # Удаление объекта
+            # Не требуется явного commit, так как begin автоматически обрабатывает commit или rollback
+        except Exception as e:
+            await db_session.rollback()
+            return JSONResponse(
+                content={"status": "error", "message": f"Database error: {str(e)}"},
+                status_code=500
+            )
+
+    return JSONResponse(
+        content={"status": "success", "otdel_id": otdel_id},
+        status_code=200
+    )
+    
+    
+async def update_otdel(db_session: AsyncSession, otdel_id: int, otdel: CreateUpdateOtdel) -> None:
+    # Создаем запрос для получения объекта отдела по ID
+    query = select(Otdels).filter(Otdels.id == otdel_id)
+    
+    try:
+        # Выполняем запрос для поиска отдела
+        result = await db_session.execute(query)
+        existing_otdel = result.scalars().one()
+        
+        # Обновляем атрибуты отдела
+        existing_otdel.name = otdel.name
+
+        # Фиксируем изменения
+        await db_session.commit()
+    
+        return JSONResponse(
+            content={"status": "success", "otdel_id": otdel_id},
+            status_code=200
+        )
+    
+    except Exception as ex:
+        # В случае других ошибок откатываем изменения
+        await db_session.rollback()
+        return JSONResponse(
+                content={"status": "error", "message": f"Database error: {str(e)}"},
+                status_code=500
+            )

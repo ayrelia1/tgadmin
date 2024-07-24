@@ -12,6 +12,8 @@ from db.models import User
 from sqlalchemy.future import select
 import sys
 import os
+from models import CreateUpdateOtdel
+import logging
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
@@ -64,6 +66,50 @@ async def users(
     )
     
     
+@otdels_router.post("/create-otdel", response_class=JSONResponse)
+async def create_otdel(
+    request: CreateUpdateOtdel, 
+    user: User = Depends(get_authenticated_user), 
+):
+    
+    try:
+        async with async_session() as db_session:
+            new_otdel = await crud.create_otdel(db_session, request)
+            await db_session.refresh(new_otdel)  # Обновить объект перед возвратом
+    except Exception as ex:
+        await db_session.rollback()
+        logging.error(ex)
+        return JSONResponse(content={"status": "error", "message": f"error - {ex}"}, status_code=501)
+        
+    return JSONResponse(content={"status": "success", "otdel": {"id": new_otdel.id, "name": new_otdel.name}}, status_code=200)
+    
+    
+    
+@otdels_router.delete("/delete-otdel/{otdel_id}", response_class=JSONResponse)
+async def delete_otdel_endpoint(
+    request: Request,
+    otdel_id: int,
+    user: User = Depends(get_authenticated_user)
+):
+    async with async_session() as db_session:
+        result = await crud.delete_otdel(db_session, otdel_id)
+        return result
+
+
+
+@otdels_router.put("/edit-otdel/{otdel_id}", response_class=JSONResponse)
+async def edit_otdel_endpoint(
+    request: CreateUpdateOtdel,
+    otdel_id: int,
+    user: User = Depends(get_authenticated_user)
+):
+    async with async_session() as db_session:
+        otdel = CreateUpdateOtdel(name=request.name)
+        result = await crud.update_otdel(db_session, otdel_id, otdel)
+        return result
+
+
+
     
     
 @otdels_router.get("/questions", response_class=HTMLResponse)

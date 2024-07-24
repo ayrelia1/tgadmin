@@ -6,6 +6,10 @@ import re
 
 class NewsletterRequest(BaseModel):
     message: str
+    
+class CreateUpdateOtdel(BaseModel):
+    name: str    
+
 
 class UserLogin(BaseModel):
     username: str

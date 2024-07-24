@@ -46,7 +46,7 @@ async def get_current_user(request: Request, session_token: str = Cookie(None)):
 
 async def get_authenticated_user(request: Request, session_token: str = Cookie(None)) -> User:
     user = await get_current_user(request, session_token)
-    if user is None:
+    if user is None: 
         raise NotAuthenticatedException(status_code=401, detail="Not authenticated")
     return user
 
@@ -55,7 +55,7 @@ async def get_authenticated_user(request: Request, session_token: str = Cookie(N
 async def send_newsletter(message: str, db_session: AsyncSession) -> dict:
     try:
         # Создание запроса для получения всех пользователей
-        query = select(UserTg)  # Запрос на выбор всех записей из UserTg
+        query = select(UserTg).where(UserTg.has_access == True) # Запрос на выбор всех записей из UserTg
         
         # Выполнение запроса и получение всех пользователей
         result = await db_session.execute(query)
