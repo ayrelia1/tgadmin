@@ -10,6 +10,8 @@ services:
       POSTGRES_DB: ${DB_NAME}
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - ./files/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./files/pg_hba.conf:/etc/postgresql/pg_hba.conf
     ports:
       - "5435:5432"
       
@@ -45,7 +47,7 @@ services:
     depends_on:
       - site
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./files/nginx.conf:/etc/nginx/nginx.conf:ro
 
 volumes:
   postgres-data:
