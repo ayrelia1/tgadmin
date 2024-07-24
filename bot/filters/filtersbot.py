@@ -12,13 +12,26 @@ class PageCallback(CallbackData, prefix="page"):
     action: str
     page: int
     
+    
+
+class PageCallbackQuestions(CallbackData, prefix="page"):
+    action: str
+    page: int
+    otdel_id: int
+    
 class OtdelsMarkup(CallbackData, prefix="page"):
     action: str
     id_otdel: int
     
+class BackToQuestions(CallbackData, prefix="page"):
+    action: str
+    id_otdel: int
+    
+    
 class QuestionsMarkup(CallbackData, prefix="page"):
     action: str
     id_question: int
+    id_otdel: int
     
 
 

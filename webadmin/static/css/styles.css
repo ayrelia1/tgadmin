@@ -1,44 +1,47 @@
-/* General Body Styles */
+/* Общие стили для страницы */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     color: #e0e0e0;
     background-color: #121212;
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-x: hidden; /* Предотвращение горизонтального скролла */
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensure the body takes at least full viewport height */
+    min-height: 100vh; /* Обеспечивает минимальную высоту страницы */
+    box-sizing: border-box; /* Учитывает паддинги и границы в размерах */
 }
 
-/* Header Styles */
+/* Стили для заголовка */
 header {
     background: #1e1e1e;
     color: #e0e0e0;
-    padding: 20px 0; /* Increased padding */
+    padding: 20px 0; /* Увеличенное паддинг */
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 1000;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4); /* Increased shadow */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4); /* Увеличенная тень */
+    box-sizing: border-box; /* Учитывает паддинги и границы в размерах */
 }
 
 header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 30px; /* Increased padding */
+    padding: 0 30px; /* Увеличенное паддинг */
+    box-sizing: border-box; /* Учитывает паддинги и границы в размерах */
 }
 
 header h1 {
     margin: 0;
-    font-size: 1.8em; /* Increased font size */
+    font-size: 1.8em; /* Увеличенный размер шрифта */
 }
 
 .menu-toggle {
     display: none;
-    font-size: 28px; /* Increased font size */
+    font-size: 28px; /* Увеличенный размер шрифта */
     background: none;
     border: none;
     color: #e0e0e0;
@@ -53,9 +56,9 @@ header nav {
 header nav a {
     color: #e0e0e0;
     text-decoration: none;
-    margin: 0 20px; /* Increased margin */
+    margin: 0 20px; /* Увеличенный отступ */
     font-weight: bold;
-    font-size: 1.1em; /* Increased font size */
+    font-size: 1.1em; /* Увеличенный размер шрифта */
     transition: color 0.3s ease;
 }
 
@@ -82,76 +85,78 @@ header nav.open {
     header nav.open {
         display: flex;
         position: absolute;
-        top: 80px; /* Adjusted position */
+        top: 80px; /* Отрегулированное положение */
         left: 0;
         background: #1e1e1e;
         width: 100%;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4); /* Increased shadow */
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4); /* Увеличенная тень */
     }
 
     header nav a {
-        margin: 15px 0; /* Increased margin */
+        margin: 15px 0; /* Увеличенный отступ */
         width: 100%;
-        padding: 15px 20px; /* Increased padding */
+        padding: 15px 20px; /* Увеличенные паддинги */
         box-sizing: border-box;
-        font-size: 1.2em; /* Increased font size */
+        font-size: 1.2em; /* Увеличенный размер шрифта */
     }
 }
 
-/* Main Content Styles */
+/* Стили для основного контента */
 main {
-    padding: 100px 30px 30px; /* Increased padding */
-    flex: 1; /* Allows main to take remaining space */
+    padding: 100px 30px 30px; /* Увеличенное паддинг */
+    flex: 1; /* Позволяет основному контенту занимать оставшееся пространство */
+    box-sizing: border-box; /* Учитывает паддинги и границы в размерах */
 }
 
+/* Контейнер для контента */
 .content-container {
-    max-width: 1060px; /* Increased max width */
+    max-width: 1060px; /* Увеличенная максимальная ширина */
     margin: auto;
-    padding: 30px; /* Increased padding */
+    padding: 30px; /* Увеличенные паддинги */
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
 }
 
-/* Form Container Styles */
+/* Стили для формы и профиля */
 .form-container, .profile-container {
     background: #1e1e1e;
-    padding: 30px; /* Increased padding */
-    border-radius: 12px; /* Increased border radius */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6); /* Increased shadow */
+    padding: 30px; /* Увеличенные паддинги */
+    border-radius: 12px; /* Увеличенный радиус скругления */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6); /* Увеличенная тень */
     min-width: 50%;
     position: relative;
     animation: fadeIn 0.5s ease-in;
 }
 
-/* Heading Styles */
+/* Стили для заголовков */
 h2 {
     margin-top: 0;
     color: #bb86fc;
-    font-size: 1.5em; /* Increased font size */
+    font-size: 1.5em; /* Увеличенный размер шрифта */
 }
 
-/* Form Styles */
+/* Стили для форм */
 form {
     display: flex;
     flex-direction: column;
 }
 
 form label {
-    margin: 15px 0 10px; /* Increased margin */
+    margin: 15px 0 10px; /* Увеличенный отступ */
     color: #e0e0e0;
-    font-size: 1.1em; /* Increased font size */
+    font-size: 1.1em; /* Увеличенный размер шрифта */
 }
 
 form input {
-    padding: 15px; /* Increased padding */
-    margin-bottom: 15px; /* Increased margin */
+    padding: 15px; /* Увеличенные паддинги */
+    margin-bottom: 15px; /* Увеличенный отступ */
     border: 1px solid #333;
-    border-radius: 8px; /* Increased border radius */
+    border-radius: 8px; /* Увеличенный радиус скругления */
     background: #333;
     color: #e0e0e0;
-    font-size: 1em; /* Increased font size */
+    font-size: 1em; /* Увеличенный размер шрифта */
     transition: border-color 0.3s ease;
 }
 
@@ -161,35 +166,35 @@ form input:focus {
 }
 
 form button {
-    padding: 15px; /* Increased padding */
+    padding: 15px; /* Увеличенные паддинги */
     background-color: #bb86fc;
     border: none;
     color: #fff;
-    border-radius: 8px; /* Increased border radius */
+    border-radius: 8px; /* Увеличенный радиус скругления */
     cursor: pointer;
-    font-size: 18px; /* Increased font size */
+    font-size: 18px; /* Увеличенный размер шрифта */
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 form button:hover {
     background-color: #9a67ea;
     transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Increased shadow */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Увеличенная тень */
 }
 
 .alert {
-    padding: 20px; /* Increased padding */
-    margin-bottom: 25px; /* Increased margin */
+    padding: 20px; /* Увеличенные паддинги */
+    margin-bottom: 25px; /* Увеличенный отступ */
     border: 1px solid transparent;
-    border-radius: 6px; /* Increased border radius */
+    border-radius: 6px; /* Увеличенный радиус скругления */
     display: none; /* По умолчанию скрыт */
 }
 
-/* Стиль для сообщений об ошибках */
+/* Стили для сообщений об ошибках */
 .alert.error {
     color: #a94442; /* Цвет текста */
     background-color: #f2dede; /* Цвет фона */
-    border-color: #ebccd1; /* Цвет рамки */
+    border-color: #ebccd1; /* Цвет границы */
 }
 
 /* Показать блок с ошибкой */
@@ -197,54 +202,54 @@ form button:hover {
     display: block;
 }
 
-/* Profile Container Styles */
+/* Стили для информации профиля */
 .profile-info p {
-    margin: 20px 0; /* Increased margin */
+    margin: 20px 0; /* Увеличенный отступ */
     color: #e0e0e0;
-    font-size: 1.2em; /* Increased font size */
+    font-size: 1.2em; /* Увеличенный размер шрифта */
 }
 
 .profile-action {
-    margin-top: 30px; /* Increased margin */
+    margin-top: 30px; /* Увеличенный отступ */
 }
 
 .logout-button {
     display: inline-block;
-    padding: 15px 25px; /* Increased padding */
+    padding: 15px 25px; /* Увеличенные паддинги */
     background-color: #bb86fc;
     color: #fff;
     text-decoration: none;
-    border-radius: 8px; /* Increased border radius */
+    border-radius: 8px; /* Увеличенный радиус скругления */
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .logout-button:hover {
     background-color: #9a67ea;
     transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Increased shadow */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Увеличенная тень */
 }
 
-/* Profile Card Styles */
+/* Стили для карточек профиля */
 .profile-card {
     background: #333;
-    padding: 30px; /* Increased padding */
-    border-radius: 12px; /* Increased border radius */
-    margin-top: 30px; /* Increased margin */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6); /* Increased shadow */
+    padding: 30px; /* Увеличенные паддинги */
+    border-radius: 12px; /* Увеличенный радиус скругления */
+    margin-top: 30px; /* Увеличенный отступ */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6); /* Увеличенная тень */
     color: #e0e0e0;
 }
 
-/* Footer Styles */
+/* Стили для футера */
 footer {
     background: #1e1e1e;
     color: #e0e0e0;
-    padding: 20px 0; /* Increased padding */
+    padding: 20px 0; /* Увеличенные паддинги */
     text-align: center;
     width: 100%;
-    font-size: 1.2em; /* Increased font size */
+    font-size: 1.2em; /* Увеличенный размер шрифта */
 }
 
-/* Index Page Styles */
+/* Стили для страницы индекса */
 .index-container {
     text-align: center;
     color: #e0e0e0;
@@ -252,15 +257,15 @@ footer {
 
 .index-container h2 {
     color: #bb86fc;
-    font-size: 2em; /* Increased font size */
+    font-size: 2em; /* Увеличенный размер шрифта */
 }
 
 .index-container p {
-    margin: 15px 0; /* Increased margin */
-    font-size: 1.2em; /* Increased font size */
+    margin: 15px 0; /* Увеличенный отступ */
+    font-size: 1.2em; /* Увеличенный размер шрифта */
 }
 
-/* Keyframes */
+/* Анимация появления */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -277,54 +282,55 @@ footer {
     color: #ffffff;
 }
 
-/* User Card Styles */
+/* Стили для карточек пользователей */
 .user-cards-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 30px; /* Increased gap */
+    gap: 30px; /* Увеличенный интервал */
     justify-content: center;
 }
 
 .user-card {
     background: #1e1e1e;
     color: #e0e0e0;
-    border-radius: 12px; /* Increased border radius */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6); /* Increased shadow */
-    padding: 30px; /* Increased padding */
-    width: 320px; /* Increased width */
+    border-radius: 12px; /* Увеличенный радиус скругления */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6); /* Увеличенная тень */
+    padding: 30px; /* Увеличенные паддинги */
+    width: 320px; /* Увеличенная ширина */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* Учитывает паддинги и границы в размерах */
 }
 
 .user-card:hover {
     transform: scale(1.03);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7); /* Increased shadow */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7); /* Увеличенная тень */
 }
 
 .user-card-header {
-    margin-bottom: 20px; /* Increased margin */
+    margin-bottom: 20px; /* Увеличенный отступ */
 }
 
 .user-card-header h2 {
     margin: 0;
     color: #bb86fc;
-    font-size: 1.4em; /* Increased font size */
+    font-size: 1.4em; /* Увеличенный размер шрифта */
 }
 
 .user-id {
-    font-size: 1em; /* Increased font size */
+    font-size: 1em; /* Увеличенный размер шрифта */
 }
 
 .user-status {
     display: flex;
     align-items: center;
-    gap: 20px; /* Increased gap */
+    gap: 20px; /* Увеличенный интервал */
 }
 
 .switch {
     position: relative;
     display: inline-block;
-    width: 40px; /* Increased width */
-    height: 24px; /* Increased height */
+    width: 40px; /* Увеличенная ширина */
+    height: 24px; /* Увеличенная высота */
 }
 
 .switch input {
@@ -342,14 +348,14 @@ footer {
     bottom: 0;
     background-color: #ccc;
     transition: .4s;
-    border-radius: 24px; /* Increased border radius */
+    border-radius: 24px; /* Увеличенный радиус скругления */
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 16px; /* Increased height */
-    width: 16px; /* Increased width */
+    height: 16px; /* Увеличенная высота */
+    width: 16px; /* Увеличенная ширина */
     border-radius: 50%;
     left: 4px;
     bottom: 4px;
@@ -362,7 +368,7 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-    transform: translateX(16px); /* Adjusted transform */
+    transform: translateX(16px); /* Отрегулированное значение */
 }
 
 .status-label {
@@ -370,13 +376,14 @@ input:checked + .slider:before {
     color: #e0e0e0;
 }
 
-/* Page Wrapper */
+/* Обертка страницы */
 .page-wrapper {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensure the wrapper takes at least full viewport height */
+    min-height: 100vh; /* Обеспечивает минимальную высоту страницы */
 }
 
+/* Класс для анимации появления */
 .fade-in {
     opacity: 0;
     animation: fadeIn 0.5s ease-in forwards;

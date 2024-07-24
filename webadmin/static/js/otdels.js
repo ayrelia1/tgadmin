@@ -16,20 +16,22 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.target.classList.contains("delete-button")) {
             const otdelId = event.target.getAttribute("data-otdel-id");
 
-            const response = await fetch(`/delete-otdel/${otdelId}`, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json"
+            if (confirm("Вы уверены, что хотите удалить этот отдел?")) {
+                const response = await fetch(`/delete-otdel/${otdelId}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    event.target.closest(".user-card").remove();
+                } else {
+                    const errorMessage = result.message || "Произошла ошибка";
+                    alert(`Ошибка: ${errorMessage}`);
                 }
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                event.target.closest(".user-card").remove();
-            } else {
-                const errorMessage = result.message || "Произошла ошибка";
-                alert(`Ошибка: ${errorMessage}`);
             }
         }
 

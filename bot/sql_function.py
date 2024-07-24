@@ -87,7 +87,7 @@ class databasework:
     async def get_all_users():
         async with async_session() as session:
             async with session.begin():
-                sql = "SELECT * FROM users"
+                sql = "SELECT * FROM users ORDER BY id ASC;"
                 result = await session.execute(text(sql))  # Выполнение запроса
                 return result.all()  # Возвращает все строки
     
@@ -96,7 +96,7 @@ class databasework:
     async def get_all_otdels():
         async with async_session() as session:
             async with session.begin():
-                sql = "SELECT * FROM otdels"
+                sql = "SELECT * FROM otdels ORDER BY id ASC;"
                 result = await session.execute(text(sql))  # Выполнение запроса
                 return result.all()  # Возвращает все строки
             
@@ -109,7 +109,14 @@ class databasework:
                         FROM questions q
                         JOIN otdels o ON q.otdel_id = o.id
                         WHERE o.id = :otdel_id
+                        ORDER BY q.id ASC;
                     """
                 result = await session.execute(text(sql), {"otdel_id": otdel_id})  # Выполнение запроса
                 return result.all()  # Возвращает все строки
     
+    async def get_question(question_id: int):
+        async with async_session() as session:
+            async with session.begin():
+                sql = "SELECT * FROM questions WHERE id = :id ORDER BY id ASC;"
+                result = await session.execute(text(sql), {"id": question_id})  # Выполнение запроса
+                return result.one_or_none()  # Возвращает все строки

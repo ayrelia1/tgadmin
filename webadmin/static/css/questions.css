@@ -1,23 +1,43 @@
 /* Общие стили для страницы */
 .page-wrapper {
     position: relative;
-    padding: 10px; /* Добавлено внутреннее пространство для предотвращения наложения содержимого на края */
+    padding: 20px; /* Добавлено для отступов от края экрана */
 }
 
 /* Контейнер для заголовка и кнопки создания */
 .header-container {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px; /* Расстояние между заголовком и другими элементами */
     margin-bottom: 20px;
     width: 100%;
 }
 
+/* Заголовок */
 .header-container h1 {
     font-size: 2em; /* Основной размер шрифта для заголовка */
     margin: 0;
     word-break: break-word; /* Предотвращение переполнения текста заголовка */
+}
+
+/* Контейнер для выбора отдела */
+.select-container {
+    display: flex;
+    flex-direction: column; /* Упорядочивает метку и выбор по вертикали */
+    width: 100%;
+}
+
+/* Выпадающий список выбора отдела */
+.select-container select {
+    background: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #bb86fc;
+    border-radius: 8px;
+    padding: 12px; /* Увеличены отступы для улучшения удобства */
+    font-size: 1em; /* Размер шрифта для лучшего восприятия */
+    width: 100%; /* Занимает полную ширину контейнера */
+    box-sizing: border-box; /* Учитывает отступы в ширине */
 }
 
 /* Кнопка создания отдела */
@@ -34,9 +54,11 @@
     font-weight: bold;
     position: relative;
     overflow: hidden;
-    text-align: center; /* Центрирование текста */
+    width: 100%; /* Занимает полную ширину контейнера */
+    box-sizing: border-box; /* Учитывает отступы в ширине */
 }
 
+/* Псевдо-элемент для кнопки создания */
 .create-button::before {
     content: "";
     position: absolute;
@@ -51,6 +73,7 @@
     z-index: 0;
 }
 
+/* Эффекты при наведении на кнопку */
 .create-button:hover::before {
     transform: translate(-50%, -50%) scale(1);
 }
@@ -75,9 +98,9 @@
     padding: 20px;
     margin-bottom: 20px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden; /* Чтобы контент не выходил за границы карточки */
 }
 
+/* Эффекты при наведении на карточки */
 .user-card:hover {
     transform: scale(1.02);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
@@ -90,7 +113,6 @@
 .user-card-header h2 {
     margin: 0;
     color: #bb86fc;
-    font-size: 1.2em; /* Увеличен размер шрифта заголовка карточки */
 }
 
 /* Стили кнопок */
@@ -112,6 +134,7 @@
     text-align: center; /* Центрирование текста */
 }
 
+/* Эффекты при наведении на кнопки */
 .delete-button:hover, .edit-button:hover {
     background: linear-gradient(135deg, #9a67ea, #bb86fc);
     transform: scale(1.05);
@@ -120,8 +143,13 @@
 
 /* Медиазапросы для мобильных устройств */
 @media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        align-items: stretch; /* Растягиваем элементы на всю ширину */
+    }
+
     .header-container h1 {
-        font-size: 1.6em;
+        font-size: 1.8em;
     }
 
     .create-button {
@@ -141,12 +169,17 @@
         font-size: 14px;
         padding: 10px 15px;
     }
+
+    .select-container select {
+        padding: 12px;
+        font-size: 1em;
+    }
 }
 
 /* Медиазапросы для экстра маленьких экранов (например, телефоны в портретном режиме) */
 @media (max-width: 480px) {
     .header-container h1 {
-        font-size: 1.3em;
+        font-size: 1.5em;
     }
 
     .create-button {
@@ -165,5 +198,28 @@
     .delete-button, .edit-button {
         font-size: 12px;
         padding: 8px 12px;
+    }
+
+    .select-container select {
+        padding: 10px; /* Уменьшены отступы для маленьких экранов */
+        font-size: 0.9em; /* Уменьшенный размер шрифта для маленьких экранов */
+    }
+
+    /* Позиционирование текста и контейнеров для очень маленьких экранов */
+    .header-container {
+        position: relative;
+        align-items: center; /* Центрирование элементов */
+        text-align: center; /* Выравнивание текста по центру */
+        padding-top: 20px; /* Отступ сверху для текстов */
+    }
+
+    .header-container h1 {
+        position: absolute;
+        top: 10%; /* Немного выше центра */
+        left: 50%;
+        transform: translate(-50%, -50%); /* Центрирование по горизонтали и немного выше по вертикали */
+        font-size: 1.3em;
+        margin: 0; /* Убираем внешние отступы */
+        width: 100%; /* Ширина 100% для центрирования */
     }
 }

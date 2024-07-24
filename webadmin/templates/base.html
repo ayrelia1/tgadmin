@@ -6,7 +6,8 @@
     <title>{% block title %}Admin Panel{% endblock %}</title>
     <link rel="stylesheet" href="/static/css/modal.css">
     <link rel="stylesheet" href="/static/css/styles.css">
-    
+    <link rel="icon" href="/static/favicon.png" type="image/x-icon">
+
     {% block extra_head %}
     {% endblock %}
 
@@ -34,9 +35,11 @@
                 <button class="menu-toggle">&#9776;</button>
                 <nav>
                     {% if user %}
-                        <a href="/questions" class="nav-link">Вопросы</a>
-                        <a href="/otdels" class="nav-link">Отделы</a>
-                        <a href="/users" class="nav-link">Пользователи</a>
+                        {% if user.has_access %}
+                            <a href="/questions" class="nav-link">Вопросы</a>
+                            <a href="/otdels" class="nav-link">Отделы</a>
+                            <a href="/users" class="nav-link">Пользователи</a>
+                        {% endif %}
                         <a href="/profile" class="nav-link">Профиль</a>
                         <a href="/logout" class="nav-link">Выйти</a>
                     {% else %}
@@ -97,6 +100,42 @@
             </div>
         </div>
 
+        <!-- Модальное окно для создания нового вопроса -->
+        <div id="question-create-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" data-modal-id="question-create-modal">&times;</span>
+                <h2 id="question-create-title">Создать новый вопрос</h2>
+                <form id="question-create-form">
+                    <label for="question-title">Название вопроса:</label>
+                    <input type="text" id="question-title" name="title" required>
+                    <label for="question-text">Ответ (необязательно):</label>
+                    <textarea id="question-text" name="text" data-required></textarea>
+                    <label for="question-file">Файл (необязательно):</label>
+                    <input type="file" id="question-file" name="file" data-required>
+                    <p id="question-otdel-id"></p> <!-- Строка для отображения ID отдела -->
+                    <button type="submit" class="save-button">Создать</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Модальное окно для редактирования вопроса -->
+        <div id="question-edit-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" data-modal-id="question-edit-modal">&times;</span>
+                <h2 id="question-edit-title">Редактировать вопрос</h2>
+                <form id="question-edit-form">
+                    <input type="hidden" id="edit-question-id" name="question_id"> <!-- Скрытое поле для хранения ID вопроса -->
+                    <label for="edit-question-title">Название вопроса:</label>
+                    <input type="text" id="edit-question-title" name="title" required>
+                    <label for="edit-question-text">Ответ текстом (необязательно):</label>
+                    <textarea id="edit-question-text" name="text" data-required></textarea>
+                    <label for="edit-question-file">Файл (необязательно):</label>
+                    <input type="file" id="edit-question-file" name="file" data-required>
+                    <p id="edit-question-otdel-id"></p> <!-- Строка для отображения ID отдела -->
+                    <button type="submit" class="save-button">Сохранить изменения</button>
+                </form>
+            </div>
+        </div>
     <script src="/static/js/scripts.js"></script>
 </body>
 </html>

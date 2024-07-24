@@ -1,9 +1,11 @@
+from typing import Optional
 from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import joinedload
 from datetime import datetime, timedelta
 from db.models import User, Session
+from exc import UpdateQuestionException
 from schemas import UserCreate, UserInDB
 import secrets
 from sqlalchemy import delete
@@ -124,6 +126,82 @@ async def update_otdel(db_session: AsyncSession, otdel_id: int, otdel: CreateUpd
         # В случае других ошибок откатываем изменения
         await db_session.rollback()
         return JSONResponse(
+                content={"status": "error", "message": f"Database error: {str(ex)}"},
+                status_code=500
+            )
+        
+        
+        
+        
+async def create_question(
+    db_session: AsyncSession,
+    title: str,
+    text: Optional[str],
+    file_data: Optional[str],
+    otdel_id: int,
+):
+    new_question = Questions(
+        name=title,
+        answer=text,
+        file=file_data,
+        otdel_id=otdel_id,
+    )
+    
+    db_session.add(new_question)
+    await db_session.commit()
+    return new_question
+
+
+
+async def update_question(
+    db_session: AsyncSession,
+    question_id: int,
+    title: Optional[str] = None,
+    text: Optional[str] = None,
+    file_data: Optional[str] = None,
+):
+    try:
+        # Получаем существующий вопрос по его ID
+        result = await db_session.execute(select(Questions).where(Questions.id == question_id))
+        question = result.scalar_one()
+
+        # Обновляем поля, даже если они None
+        question.name = title
+        question.answer = text
+        question.file = file_data
+
+        # Сохраняем изменения в базе данных
+        await db_session.commit()
+        return question
+
+    except Exception as ex:
+        # Если вопрос с данным ID не найден, можно вернуть None или выбросить исключение
+        raise UpdateQuestionException(f'ERROR - {ex}')
+
+
+async def delete_question(db_session: AsyncSession, question_id: int):
+    async with db_session.begin():  # Начало транзакции
+        try:
+            query = select(Questions).where(Questions.id == question_id)
+            result = await db_session.execute(query)
+            question = result.scalar_one_or_none()
+            
+            if not question:
+                return JSONResponse(
+                    content={"status": "error", "message": "Question not found"},
+                    status_code=404
+                )
+
+            await db_session.delete(question)  # Удаление объекта
+            # Не требуется явного commit, так как begin автоматически обрабатывает commit или rollback
+        except Exception as e:
+            await db_session.rollback()
+            return JSONResponse(
                 content={"status": "error", "message": f"Database error: {str(e)}"},
                 status_code=500
             )
+
+    return JSONResponse(
+        content={"status": "success", "question_id": question_id},
+        status_code=200
+    )

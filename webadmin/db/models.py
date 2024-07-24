@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, DeclarativeBase
 from db.db import engine
@@ -17,6 +17,8 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     password = Column(String)
     full_name = Column(String)
+    
+    has_access = Column(Boolean, server_default='False', nullable=False)
     
     sessions = relationship("Session", back_populates="user")
 

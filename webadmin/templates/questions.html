@@ -1,41 +1,58 @@
 {% extends "base.html" %}
 
-{% block title %}Отделы{% endblock %}
+{% block title %}Вопросы{% endblock %}
 
 {% block extra_head %}
-<script src="/static/js/otdels.js" defer></script>
+<script src="/static/js/questions.js" defer></script>
 <script src="/static/js/users.js" defer></script>
 <link rel="stylesheet" href="/static/css/common.css">
+<link rel="stylesheet" href="/static/css/questions.css">
 <link rel="stylesheet" href="/static/css/otdels.css">
 <link rel="stylesheet" href="/static/css/users.css">
 {% endblock %}
 
 {% block content %}
-
 <div class="header-container">
-    <h1>Отделы</h1>
-    <button id="create-button" class="create-button">Создать вопрос</button>
+    <h1>Вопросы</h1>
+    <div class="select-container">
+        <select id="select-otdel" name="otdel">
+            <option value="" {% if not selected_otdel_id %}selected{% endif %}>-- Выберите отдел --</option>
+            {% for otdel in otdels %}
+                <option value="{{ otdel.id }}" {% if otdel.id == selected_otdel_id %}selected{% endif %}>
+                    {{ otdel.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <button id="create-button" class="create-button" style="display: {% if not selected_otdel_id %}none{% else %}inline{% endif %};">Создать вопрос</button>
 </div>
 
 <div class="user-cards-container">
-    {% for question in questions %}
-    <div class="user-card">
-        <div class="user-card-header">
-            <h3 class="user-id">ID: {{ question.id }}</h3>
-            <h2 class="user-username">{{ question.name }}</h2>
+    {% if questions %}
+        {% for question in questions %}
+        <div class="user-card">
+            <div class="user-card-header">
+                <h3 class="user-id">ID: {{ question.id }}</h3>
+                <h2 class="user-username">{{ question.name }}</h2>
+            </div>
+            <div class="user-actions">
+                <button class="edit-button" 
+                        data-question-id="{{ question.id }}" 
+                        data-question-name="{{ question.name }}" 
+                        data-question-text="{{ question.answer }}" 
+                        data-question-file="{{ question.file }}" 
+                        data-question-otdel-id="{{ question.otdel_id }}">
+                    Изменить
+                </button>
+                <button class="delete-button" data-question-id="{{ question.id }}">Удалить</button>
+            </div>
         </div>
-        <div class="user-actions">
-            <button class="edit-button" data-otdel-id="{{ question.id }}" data-otdel-name="{{ question.name }}">Изменить</button>
-            <button class="delete-button" data-otdel-id="{{ question.id }}">Удалить</button>
-        </div>
-    </div>
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        <p>Пожалуйста, выберите отдел для отображения вопросов.</p>
+    {% endif %}
 </div>
 
 {% include 'pagination.html' %}
 
-
-
 {% endblock %}
-
-

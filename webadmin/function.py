@@ -5,7 +5,7 @@ from sqlalchemy import select
 from db.db import async_session
 from db import crud
 from db.models import User
-from exc import NotAuthenticatedException, NewsletterException
+from exc import NotAuthenticatedException, NewsletterException, NotAccessException
 import logging
 import os
 import sys
@@ -50,6 +50,14 @@ async def get_authenticated_user(request: Request, session_token: str = Cookie(N
         raise NotAuthenticatedException(status_code=401, detail="Not authenticated")
     return user
 
+async def get_user_with_access(request: Request, session_token: str = Cookie(None)) -> User:
+    user = await get_current_user(request, session_token)
+    if user is None: 
+        raise NotAuthenticatedException(status_code=401, detail="Not authenticated")
+    if user.has_access == False:
+        raise NotAccessException(status_code=401, detail="Нет доступа")
+    
+    return user
 
 
 async def send_newsletter(message: str, db_session: AsyncSession) -> dict:

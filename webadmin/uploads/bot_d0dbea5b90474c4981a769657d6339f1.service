@@ -1,0 +1,16 @@
+[Unit]
+Description=Example - Telegram Bot
+
+After=syslog.target 
+After=network.target
+
+[Service] 
+
+WorkingDirectory=/home/tgbot/
+ExecStart=/home/tgbot/myenv/bin/python3 /home/tgbot/bot.py 
+RestartSec=60
+StandardError=file:/home/tgbot/logs.log
+
+[Install] 
+
+WantedBy=multi-user.target

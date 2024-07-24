@@ -55,7 +55,7 @@ class Otdels(Base):
 
     id = mapped_column(Integer, primary_key=True, index=True)
     name = mapped_column(String)
-    questions = relationship("Questions", back_populates="otdel")
+    questions = relationship("Questions", back_populates="otdel", cascade="all, delete-orphan")
 
 class Questions(Base):
     __tablename__ = 'questions'

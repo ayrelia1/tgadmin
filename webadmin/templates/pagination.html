@@ -1,28 +1,27 @@
-<!-- templates/partials/pagination.html -->
 <div class="pagination">
     {% if current_page > 1 %}
-    <a href="?page={{ current_page - 1 }}" class="pagination-button">Назад</a>
+    <a href="?page={{ current_page - 1 }}{% if selected_otdel_id %}&otdel={{ selected_otdel_id }}{% endif %}" class="pagination-button">Назад</a>
     {% endif %}
 
     {% if start_page > 1 %}
-    <a href="?page=1" class="pagination-button">1</a>
+    <a href="?page=1{% if selected_otdel_id %}&otdel={{ selected_otdel_id }}{% endif %}" class="pagination-button">1</a>
     {% if start_page > 2 %}
     <span class="pagination-ellipsis">...</span>
     {% endif %}
     {% endif %}
 
     {% for page in range(start_page, end_page + 1) %}
-    <a href="?page={{ page }}" class="pagination-button {% if page == current_page %}active{% endif %}">{{ page }}</a>
+    <a href="?page={{ page }}{% if selected_otdel_id %}&otdel={{ selected_otdel_id }}{% endif %}" class="pagination-button {% if page == current_page %}active{% endif %}">{{ page }}</a>
     {% endfor %}
 
     {% if end_page < total_pages %}
     {% if end_page < total_pages - 1 %}
     <span class="pagination-ellipsis">...</span>
     {% endif %}
-    <a href="?page={{ total_pages }}" class="pagination-button">{{ total_pages }}</a>
+    <a href="?page={{ total_pages }}{% if selected_otdel_id %}&otdel={{ selected_otdel_id }}{% endif %}" class="pagination-button">{{ total_pages }}</a>
     {% endif %}
 
     {% if current_page < total_pages %}
-    <a href="?page={{ current_page + 1 }}" class="pagination-button">Вперед</a>
+    <a href="?page={{ current_page + 1 }}{% if selected_otdel_id %}&otdel={{ selected_otdel_id }}{% endif %}" class="pagination-button">Вперед</a>
     {% endif %}
 </div>

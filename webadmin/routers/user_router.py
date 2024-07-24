@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime
 from db import crud
 from db.db import async_session
-from function import decrypt_token, get_authenticated_user, send_newsletter
+from function import decrypt_token, get_authenticated_user, send_newsletter, get_user_with_access
 from config import templates
 from db.models import User
 from sqlalchemy.future import select
@@ -29,16 +29,9 @@ async def read_root(request: Request, user: User = Depends(get_authenticated_use
 
 @user_router.get("/profile", response_class=HTMLResponse)
 async def profile(request: Request, user: User = Depends(get_authenticated_user)):
-    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    current_hour = datetime.now().hour
-    if current_hour < 12:
-        time_of_day = "morning"
-    elif 12 <= current_hour < 18:
-        time_of_day = "afternoon"
-    else:
-        time_of_day = "evening"
 
-    return templates.TemplateResponse("profile.html", {"request": request, "user": user, "time_of_day": time_of_day, "current_time": current_time})
+
+    return templates.TemplateResponse("profile.html", {"request": request, "user": user})
 
 
 
@@ -46,7 +39,7 @@ async def profile(request: Request, user: User = Depends(get_authenticated_user)
 @user_router.get("/users", response_class=HTMLResponse)
 async def users(
     request: Request, 
-    user: User = Depends(get_authenticated_user), 
+    user: User = Depends(get_user_with_access), 
     page: int = Query(1, alias='page', ge=1)
 ):
     ITEMS_PER_PAGE = 12
@@ -90,7 +83,7 @@ async def users(
 async def update_status(
     request: Request, 
     user_id: int,
-    user: User = Depends(get_authenticated_user)
+    user: User = Depends(get_user_with_access)
 ):
     async with async_session() as db_session:
         # Выполняем запрос для поиска пользователя по user_id
@@ -117,7 +110,7 @@ async def update_status(
 @user_router.post("/send-newsletter", response_class=JSONResponse)
 async def newsletter(
     request: NewsletterRequest,  # Используем Pydantic модель
-    user: User = Depends(get_authenticated_user)
+    user: User = Depends(get_user_with_access)
 ):
     async with async_session() as db_session:
         try:

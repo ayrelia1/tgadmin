@@ -1,130 +1,201 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const deleteButtons = document.querySelectorAll(".delete-button");
-    const editButtons = document.querySelectorAll(".edit-button");
     const createButton = document.getElementById("create-button");
-    
-    const editModal = document.getElementById("edit-modal");
-    const createModal = document.getElementById("create-modal");
+    const selectOtdel = document.getElementById("select-otdel");
+    const userCardsContainer = document.querySelector(".user-cards-container");
+    const paginationContainer = document.querySelector(".pagination");
+
+    const questionCreateModal = document.getElementById("question-create-modal");
+    const questionEditModal = document.getElementById("question-edit-modal");
     const closeButton = document.querySelectorAll(".close-button");
-    const editForm = document.getElementById("edit-form");
-    const createForm = document.getElementById("create-form");
-    
-    const editNameInput = document.getElementById("edit-name");
-    const editIdInput = document.getElementById("edit-id");
-    const createNameInput = document.getElementById("create-name");
-    
-    const modalTitle = document.getElementById("modal-title");
-    const createTitle = document.getElementById("create-title");
-    
+    const questionCreateForm = document.getElementById("question-create-form");
+    const questionEditForm = document.getElementById("question-edit-form");
 
-    deleteButtons.forEach(button => {
-        button.addEventListener("click", async () => {
-            const otdelId = button.getAttribute("data-otdel-id");
+    const questionTitleInput = document.getElementById("question-title");
+    const questionTextInput = document.getElementById("question-text");
+    const questionFileInput = document.getElementById("question-file");
+    const questionOtdelIdDisplay = document.getElementById("question-otdel-id");
 
-            const response = await fetch(`/delete-otdel/${otdelId}`, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
+    const editQuestionIdInput = document.getElementById("edit-question-id");
+    const editQuestionTitleInput = document.getElementById("edit-question-title");
+    const editQuestionTextInput = document.getElementById("edit-question-text");
+    const editQuestionFileInput = document.getElementById("edit-question-file");
+    const editQuestionOtdelIdDisplay = document.getElementById("edit-question-otdel-id");
 
-            if (response.ok) {
-                button.closest(".user-card").remove();
-            } else {
-                console.error("Failed to delete otdel");
+    let currentPage = new URLSearchParams(window.location.search).get('page') || 1;
+    let selectedOtdelId = new URLSearchParams(window.location.search).get('otdel') || null;
+
+    // Обновляем страницу при изменении отдела
+    selectOtdel.addEventListener("change", (event) => {
+        currentPage = 1;  // Сбрасываем страницу на 1
+        selectedOtdelId = event.target.value;
+        updateUrl();
+    });
+
+    // Обновляем URL при нажатии на кнопку пагинации
+    paginationContainer.addEventListener("click", (event) => {
+        if (event.target.classList.contains("pagination-button")) {
+            const page = event.target.getAttribute("data-page");
+            if (page) {
+                currentPage = page;
+                updateUrl();
+            }
+        }
+    });
+
+    // Обновляем URL с новыми параметрами
+    function updateUrl() {
+        const params = new URLSearchParams();
+        params.set('page', currentPage); // Устанавливаем страницу первым
+        if (selectedOtdelId) {
+            params.set('otdel', selectedOtdelId); // Устанавливаем отдел вторым
+        }
+        window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
+        window.location.reload(); // Перезагрузить страницу с новыми параметрами
+    }
+
+    // Открытие модального окна для создания вопроса
+    if (createButton) {
+        createButton.addEventListener("click", () => {
+            if (selectedOtdelId) {
+                questionOtdelIdDisplay.textContent = `ID отдела: ${selectedOtdelId}`;
+                questionCreateModal.classList.add("show"); // Показать модальное окно
+            }
+        });
+    }
+
+    // Открытие модального окна для редактирования вопроса
+    function openEditModal(questionId, title, text, fileName, otdelId) {
+        editQuestionIdInput.value = questionId;
+        editQuestionTitleInput.value = title;
+        editQuestionTextInput.value = text;
+        editQuestionOtdelIdDisplay.textContent = `ID отдела: ${otdelId}`;
+        editQuestionFileInput.value = ''; // Файловый input не поддерживает установки значения через JS
+        questionEditModal.classList.add("show"); // Показать модальное окно
+    }
+
+    // Обработчик клика по кнопкам редактирования
+    userCardsContainer.addEventListener("click", (event) => {
+        if (event.target.classList.contains("edit-button")) {
+            const questionId = event.target.getAttribute("data-question-id");
+            const title = event.target.getAttribute("data-question-name");
+            const text = event.target.getAttribute("data-question-text") || "";
+            const fileName = event.target.getAttribute("data-question-file") || "";
+            const otdelId = event.target.getAttribute("data-question-otdel-id");
+            openEditModal(questionId, title, text, fileName, otdelId);
+        } else if (event.target.classList.contains("delete-button")) {
+            const questionId = event.target.getAttribute("data-question-id");
+            if (confirm("Вы уверены, что хотите удалить этот вопрос?")) {
+                deleteQuestion(questionId);
+            }
+        }
+    });
+
+    // Функция для удаления вопроса
+    async function deleteQuestion(questionId) {
+        const response = await fetch(`/delete-question/${questionId}`, {
+            method: "DELETE"
+        });
+
+        if (response.ok) {
+            updateUrl(); // Обновляем URL и перезагружаем страницу
+        } else {
+            console.error("Failed to delete question");
+        }
+    }
+
+    // Обработчик закрытия модальных окон
+    closeButton.forEach(button => {
+        button.addEventListener("click", (event) => {
+            const modalId = event.target.getAttribute("data-modal-id");
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove("show"); // Скрыть соответствующее модальное окно
             }
         });
     });
 
-    editButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            const otdelId = button.getAttribute("data-otdel-id");
-            const otdelName = button.getAttribute("data-otdel-name");
-
-            editIdInput.value = otdelId;
-            editNameInput.value = otdelName;
-            modalTitle.textContent = `Изменить отдел ${otdelName} (ID: ${otdelId})`; // Обновляем заголовок
-            editModal.classList.add("show"); // Показать модальное окно
-        });
-    });
-
-    createButton.addEventListener("click", () => {
-        createNameInput.value = ""; // Очистить поле ввода
-        createTitle.textContent = "Создать новый отдел";
-        createModal.classList.add("show"); // Показать модальное окно
-    });
-
-
-
-    closeButton.forEach(button => {
-        button.addEventListener("click", (event) => {
-            const modalId = event.target.getAttribute("data-modal-id");
-            document.getElementById(modalId).classList.remove("show"); // Скрыть соответствующее модальное окно
-        });
-    });
-
     window.addEventListener("click", (event) => {
-        if (event.target === editModal) {
-            editModal.classList.remove("show"); // Скрыть модальное окно при клике вне его
-        }
-        if (event.target === createModal) {
-            createModal.classList.remove("show"); // Скрыть модальное окно при клике вне его
+        if (event.target === questionCreateModal || event.target === questionEditModal) {
+            event.target.classList.remove("show"); // Скрыть модальное окно при клике вне его
         }
     });
 
-    editForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        const otdelId = editIdInput.value;
-        const newName = editNameInput.value;
+    // Обработка отправки формы для создания вопроса
+    if (questionCreateForm) {
+        questionCreateForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
 
-        const response = await fetch(`/edit-otdel/${otdelId}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ name: newName })
+            const title = questionTitleInput.value;
+            const text = questionTextInput.value || "";
+            const file = questionFileInput.files[0] || null;
+
+            if (!text && !file) {
+                alert("Пожалуйста, заполните хотя бы одно поле: текст или файл.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("title", title);
+            formData.append("text", text);
+            if (file) {
+                formData.append("file", file);
+            }
+            formData.append("otdel_id", selectedOtdelId);
+
+            const response = await fetch(`/create-question`, {
+                method: "POST",
+                body: formData
+            });
+
+            if (response.ok) {
+                updateUrl(); // Обновляем URL и перезагружаем страницу
+                questionCreateModal.classList.remove("show"); // Скрыть модальное окно
+            } else {
+                console.error("Failed to create question");
+            }
         });
+    }
 
-        if (response.ok) {
-            document.querySelector(`[data-otdel-id='${otdelId}']`).closest(".user-card").querySelector(".user-username").textContent = newName;
-            editModal.classList.remove("show"); // Скрыть модальное окно
-        } else {
-            console.error("Failed to edit otdel");
-        }
-    });
+    // Обработка отправки формы для редактирования вопроса
+    if (questionEditForm) {
+        questionEditForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
 
-    createForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        const newName = createNameInput.value;
+            const questionId = editQuestionIdInput.value;
+            const title = editQuestionTitleInput.value;
+            const text = editQuestionTextInput.value || "";
+            const file = editQuestionFileInput.files[0] || null;
 
-        const response = await fetch(`/create-otdel`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ name: newName })
+            if (!text && !file) {
+                alert("Пожалуйста, заполните хотя бы одно поле: текст или файл.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("id", questionId);
+            formData.append("title", title);
+            formData.append("text", text);
+            if (file) {
+                formData.append("file", file);
+            }
+            formData.append("otdel_id", editQuestionOtdelIdDisplay.textContent.split(': ')[1]);
+
+            const response = await fetch(`/edit-question`, {
+                method: "PUT",
+                body: formData
+            });
+
+            if (response.ok) {
+                updateUrl(); // Обновляем URL и перезагружаем страницу
+                questionEditModal.classList.remove("show"); // Скрыть модальное окно
+            } else {
+                console.error("Failed to edit question");
+            }
         });
+    }
 
-        if (response.ok) {
-            const newOtdel = await response.json();
-            const newCard = document.createElement("div");
-            newCard.classList.add("user-card");
-            newCard.innerHTML = `
-                <div class="user-card-header">
-                    <h3 class="user-id">ID: ${newOtdel.id}</h3>
-                    <h2 class="user-username">${newOtdel.name}</h2>
-                </div>
-                <div class="user-actions">
-                    <button class="edit-button" data-otdel-id="${newOtdel.id}" data-otdel-name="${newOtdel.name}">Изменить</button>
-                    <button class="delete-button" data-otdel-id="${newOtdel.id}">Удалить</button>
-                </div>
-            `;
-            document.querySelector(".user-cards-container").appendChild(newCard);
-            createModal.classList.remove("show"); // Скрыть модальное окно
-        } else {
-            console.error("Failed to create otdel");
-        }
-    });
-
-
+    // Инициализация на основе параметров URL
+    if (selectedOtdelId) {
+        selectOtdel.value = selectedOtdelId;
+    }
 });
