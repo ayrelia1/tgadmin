@@ -14,6 +14,11 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Копирование файлов приложения
-
 COPY . /app
 WORKDIR /app
+
+# Копирование конфигурации Nginx
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+
+# Запуск Nginx и вашего приложения
+CMD service nginx start && tail -f /dev/null

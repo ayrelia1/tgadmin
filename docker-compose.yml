@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: always
-    command: ["python","-u", "bot"]
+    command: ["python", "-u", "bot"]
     depends_on:
       - postgres
     volumes:
@@ -30,7 +30,7 @@ services:
       context: .
       dockerfile: Dockerfile
     restart: always
-    command: ["python","-u", "webadmin"]
+    command: ["python", "-u", "webadmin"]
     depends_on:
       - postgres
     volumes:
@@ -38,9 +38,7 @@ services:
       - ./logs:/app/logs
       
   nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
+    image: nginx:latest
     restart: always
     ports:
       - "8000:8000"
