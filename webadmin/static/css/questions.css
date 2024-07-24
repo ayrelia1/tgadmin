@@ -7,6 +7,7 @@
 /* Контейнер для заголовка и кнопки создания */
 .header-container {
     display: flex;
+    flex-wrap: wrap; /* Позволяет элементам переноситься на следующую строку при необходимости */
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
@@ -118,8 +119,10 @@
 .user-actions {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap; /* Позволяет кнопкам переноситься на следующую строку при необходимости */
 }
 
+/* Стили для кнопок */
 .delete-button, .edit-button {
     background: linear-gradient(135deg, #bb86fc, #9a67ea);
     color: white;
@@ -144,16 +147,30 @@
 @media (max-width: 768px) {
     .header-container {
         flex-direction: column;
-        align-items: stretch; /* Растягиваем элементы на всю ширину */
+        align-items: center; /* Центрирование элементов */
     }
 
     .header-container h1 {
-        font-size: 1.8em;
+        font-size: 1.6em; /* Уменьшен размер шрифта для заголовка */
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .select-container {
+        margin: 10px 0; /* Отступы сверху и снизу для контейнера выбора отдела */
+        width: 100%; /* Ширина контейнера выбора отдела */
+        justify-content: center; /* Центрирование выбора */
+    }
+
+    .select-container select {
+        width: 100%; /* Ширина селекта на мобильных устройствах */
+        box-sizing: border-box;
     }
 
     .create-button {
         font-size: 14px;
-        padding: 10px 15px;
+        padding: 8px 12px;
+        width: 100%; /* Ширина кнопки на мобильных устройствах */
     }
 
     .user-card {
@@ -168,11 +185,6 @@
         font-size: 14px;
         padding: 10px 15px;
     }
-
-    .select-container select {
-        padding: 12px;
-        font-size: 1em;
-    }
 }
 
 /* Медиазапросы для экстра маленьких экранов (например, телефоны в портретном режиме) */
@@ -180,15 +192,28 @@
     .header-container {
         flex-direction: column;
         align-items: center; /* Центрирование элементов */
+        padding: 10px 0; /* Уменьшены отступы */
     }
 
     .header-container h1 {
-        font-size: 1.5em;
+        font-size: 1.4em; /* Уменьшенный размер шрифта */
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .select-container {
+        margin: 10px 0; /* Отступы сверху и снизу */
+    }
+
+    .select-container select {
+        padding: 6px;
+        font-size: 0.8em;
     }
 
     .create-button {
         font-size: 12px;
-        padding: 8px 12px;
+        padding: 6px 10px;
+        width: 100%; /* Ширина кнопки на экстра маленьких экранах */
     }
 
     .user-card {
@@ -202,10 +227,5 @@
     .delete-button, .edit-button {
         font-size: 12px;
         padding: 8px 12px;
-    }
-
-    .select-container select {
-        padding: 10px; /* Уменьшены отступы для маленьких экранов */
-        font-size: 0.9em; /* Уменьшенный размер шрифта для маленьких экранов */
     }
 }
