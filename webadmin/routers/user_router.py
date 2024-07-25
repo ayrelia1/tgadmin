@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime
 from db import crud
 from db.db import async_session
-from function import decrypt_token, get_authenticated_user, send_newsletter, get_user_with_access
+from function import decrypt_token, get_authenticated_user, send_newsletter, get_user_with_access, send_msg
 from config import templates
 from db.models import User
 from sqlalchemy.future import select
@@ -90,7 +90,12 @@ async def update_status(
         if not user_record:
             raise HTTPException(status_code=404, detail="User not found")
         
-        user_record.has_access = not user_record.has_access
+        
+        if user_record.has_access == True:
+            user_record.has_access == False
+        else:
+            user_record.has_access == True
+            await send_msg(user_id)
         
         db_session.add(user_record)
         await db_session.commit()
