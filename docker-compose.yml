@@ -35,8 +35,6 @@ services:
     command: ["python", "-u", "webadmin"]
     depends_on:
       - postgres
-    ports:
-      - "8080:80"  # измените здесь
     volumes:
       - .:/app
       - ./logs:/app/logs
