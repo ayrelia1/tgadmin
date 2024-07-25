@@ -45,7 +45,7 @@ services:
     image: nginx:latest
     restart: always
     ports:
-      - "80:80"
+      - "82:80"
     depends_on:
       - site
     volumes:
