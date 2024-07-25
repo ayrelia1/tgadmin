@@ -10,13 +10,10 @@ from function import decrypt_token, get_authenticated_user, send_newsletter, get
 from config import templates
 from db.models import User
 from sqlalchemy.future import select
-import sys
-import os
 import asyncio
 import logging
 from models import NewsletterRequest
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
 
 from bot.db.models import UserTg, Otdels, Questions
 
