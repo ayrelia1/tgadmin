@@ -95,7 +95,7 @@ async def update_status(
             user_record.has_access = False
         else:
             user_record.has_access = True
-            await send_msg(user_id)
+            await send_msg(user_record.user_id)
         
         db_session.add(user_record)
         await db_session.commit()
