@@ -16,8 +16,19 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
 from bot.db.models import UserTg
 from bot.config import bot
-from bot.markups.markup import start_markup
+from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 
+def start_markup(): # старт кнопки
+
+    markup = (
+        InlineKeyboardBuilder()
+        .button(text='Тич-Пицца', callback_data='pizza') # 
+        .button(text='Ебидоеби', callback_data='ebi')
+        .adjust(1, repeat=True)
+        .as_markup()
+    )
+    
+    return markup
 
 key = os.getenv('SECRET_KEY_AUTH')
 cipher_suite = Fernet(key)
