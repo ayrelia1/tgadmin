@@ -1,3 +1,5 @@
+import os
+import sys
 from typing import Optional
 from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -11,12 +13,9 @@ import secrets
 from sqlalchemy import delete
 from passlib.context import CryptContext
 from models import CreateUpdateOtdel
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+import config
 
 from bot.db.models import Otdels, Questions
-
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

@@ -13,13 +13,12 @@ from function import decrypt_token, get_authenticated_user, get_user_with_access
 from config import templates
 from db.models import User
 from sqlalchemy.future import select
-import sys
 import os
 from models import CreateUpdateOtdel
 import logging
 from pathlib import Path
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+
 
 from bot.db.models import Otdels, Questions
 

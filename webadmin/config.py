@@ -1,4 +1,5 @@
 import os
+import sys
 from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
 from fastapi import FastAPI
@@ -9,7 +10,13 @@ from db.db import engine
 from db.models import create_tables
 import asyncio
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+
+
 load_dotenv()
+
+
+
 
 current_directory = os.path.abspath(os.path.dirname(__file__))
 
