@@ -36,7 +36,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - "80:80"
+      - "82:80"
     volumes:
       - .:/app
       - ./logs:/app/logs
