@@ -92,9 +92,9 @@ async def update_status(
         
         
         if user_record.has_access == True:
-            user_record.has_access == False
+            user_record.has_access = False
         else:
-            user_record.has_access == True
+            user_record.has_access = True
             await send_msg(user_id)
         
         db_session.add(user_record)
