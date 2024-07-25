@@ -1,4 +1,6 @@
-from config import types, InlineKeyboardBuilder
+from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
+from aiogram import types
+
 from filters import filtersbot
 from sql_function import databasework
 import math
