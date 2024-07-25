@@ -41,7 +41,7 @@ services:
     image: nginx:latest
     restart: always
     ports:
-      - "8080:80"  # Проброс порта 8080 на хосте
+      - "443:80"  # Проброс порта 8080 на хосте
     depends_on:
       - site
     volumes:
