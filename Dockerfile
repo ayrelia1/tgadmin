@@ -19,8 +19,6 @@ WORKDIR /app
 
 EXPOSE 80
 
-# Копирование конфигурации Nginx
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
 # Запуск Nginx и вашего приложения
 CMD service nginx start && tail -f /dev/null
