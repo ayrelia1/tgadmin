@@ -16,7 +16,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 
 from bot.db.models import UserTg
 from bot.config import bot
-from bot.markups.markup import start_markup
+from bot.markups import markup as markup_bot
 
 
 key = os.getenv('SECRET_KEY_AUTH')
@@ -83,7 +83,7 @@ async def send_newsletter(message: str, db_session: AsyncSession) -> dict:
 
 async def send_msg(user_id: int):
     try:
-        markup = start_markup()
+        markup = markup_bot.start_markup()
         await bot.send_message(chat_id=user_id, text='⭐️ Добро пожаловать в бота, используйте кнопки ниже', reply_markup=markup)
     except Exception as ex:
         logging.error(f"ERROR send msg - {ex}")
