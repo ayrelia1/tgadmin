@@ -17,6 +17,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app
 WORKDIR /app
 
+EXPOSE 80
+
 # Копирование конфигурации Nginx
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
