@@ -38,12 +38,12 @@ services:
     volumes:
       - .:/app
       - ./logs:/app/logs
-
+      
   nginx:
     image: nginx:latest
     restart: always
     ports:
-      - "8080:80"  # измените здесь
+      - "8000:8000"
     depends_on:
       - site
     volumes:
