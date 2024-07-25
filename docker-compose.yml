@@ -36,7 +36,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - "82:80"
+      - "85:80"
     volumes:
       - .:/app
       - ./logs:/app/logs
@@ -45,7 +45,7 @@ services:
     image: nginx:latest
     restart: always
     ports:
-      - "82:80"
+      - "85:80"
     depends_on:
       - site
     volumes:
