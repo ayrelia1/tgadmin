@@ -164,7 +164,6 @@ async def question(callback: types.CallbackQuery, callback_data: filtersbot.Ques
                 await bot.send_message(chat_id=callback.message.chat.id, text=part, reply_markup=markup)
     else:
         parts = split_text(answer, MAX_MESSAGE_LENGTH)
-        print(parts)
         await bot.edit_message_text(text=parts[0], chat_id=callback.message.chat.id, message_id=callback.message.message_id, reply_markup=markup)
         for part in parts[1:]:
             await bot.send_message(chat_id=callback.message.chat.id, text=part, reply_markup=markup)
