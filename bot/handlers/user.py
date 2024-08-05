@@ -120,10 +120,23 @@ async def questions(callback: types.CallbackQuery, callback_data: filtersbot.Otd
 
 
 # ============ Ответ на вопрос ========== # 
+MAX_MESSAGE_LENGTH = 4096
+
+def split_text(text, max_length):
+    # Split the text into parts not exceeding max_length
+    parts = []
+    while len(text) > max_length:
+        # Find the last space character within the max_length limit to avoid splitting words
+        split_pos = text.rfind(' ', 0, max_length)
+        if split_pos == -1:
+            split_pos = max_length  # In case there's no space, split at max_length
+        parts.append(text[:split_pos])
+        text = text[split_pos:].strip()
+    parts.append(text)
+    return parts
+
 @router.callback_query(filtersbot.QuestionsMarkup.filter(F.action == 'open_ques'))
 async def question(callback: types.CallbackQuery, callback_data: filtersbot.QuestionsMarkup) -> None:
-    
-    
     id_question = callback_data.id_question
     question = await databasework.get_question(id_question)
     answer = question[2]
@@ -134,21 +147,26 @@ async def question(callback: types.CallbackQuery, callback_data: filtersbot.Ques
         await bot.delete_message(chat_id=callback.message.chat.id, message_id=callback.message.message_id)
         file = FSInputFile(path=f"{UPLOAD_DIRECTORY}/{filename}")
         
-        if filename.split('.')[-1] == 'jpg' or filename.split('.')[-1] == 'png':
-            await bot.send_photo(caption=answer, chat_id=callback.message.chat.id, photo=file, reply_markup=markup)
-            return
+        if filename.split('.')[-1] in ['jpg', 'png']:
+            await bot.send_photo(caption=answer[:MAX_MESSAGE_LENGTH], chat_id=callback.message.chat.id, photo=file, reply_markup=markup)
+            remaining_text = answer[MAX_MESSAGE_LENGTH:]
+        elif filename.split('.')[-1] == 'mp4':
+            await bot.send_video(caption=answer[:MAX_MESSAGE_LENGTH], chat_id=callback.message.chat.id, video=file, reply_markup=markup)
+            remaining_text = answer[MAX_MESSAGE_LENGTH:]
+        else:
+            await bot.send_document(caption=answer[:MAX_MESSAGE_LENGTH], chat_id=callback.message.chat.id, document=file, reply_markup=markup)
+            remaining_text = answer[MAX_MESSAGE_LENGTH:]
         
-        
-        if filename.split('.')[-1] == 'mp4':
-            await bot.send_video(caption=answer, chat_id=callback.message.chat.id, video=file, reply_markup=markup)
-            return
-        
-        await bot.send_document(caption=answer, chat_id=callback.message.chat.id, document=file, reply_markup=markup)
+        # Send remaining text if any
+        if remaining_text:
+            parts = split_text(remaining_text, MAX_MESSAGE_LENGTH)
+            for part in parts:
+                await bot.send_message(chat_id=callback.message.chat.id, text=part, reply_markup=markup)
     else:
-        await bot.edit_message_text(text=answer, chat_id=callback.message.chat.id, message_id=callback.message.message_id, reply_markup=markup)
-
-
-
+        parts = split_text(answer, MAX_MESSAGE_LENGTH)
+        await bot.edit_message_text(text=parts[0], chat_id=callback.message.chat.id, message_id=callback.message.message_id, reply_markup=markup)
+        for part in parts[1:]:
+            await bot.send_message(chat_id=callback.message.chat.id, text=part, reply_markup=markup)
 
 
 user = router
