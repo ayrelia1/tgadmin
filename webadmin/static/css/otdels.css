@@ -66,6 +66,14 @@
     z-index: 1;
 }
 
+/* Контейнер для карточек отдела */
+.card-container {
+    display: flex;
+    flex-wrap: wrap; /* Разрешает перенос карточек на новую строку */
+    gap: 20px; /* Отступы между карточками */
+    justify-content: center; /* Центрирование карточек по горизонтали */
+}
+
 /* Общие стили для карточек отдела */
 .user-card {
     background: #1e1e1e;
@@ -73,9 +81,9 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     padding: 20px;
-    margin-bottom: 20px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden; /* Чтобы контент не выходил за границы карточки */
+    flex: 1 1 300px; /* Разрешает карточкам быть не меньше 300px в ширину и расти, если есть место */
 }
 
 .user-card:hover {
