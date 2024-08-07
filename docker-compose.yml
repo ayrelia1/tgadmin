@@ -33,11 +33,11 @@ services:
     command: ["python", "-u", "webadmin"]
     depends_on:
       - postgres
-    ports:
-      - "8004:8004"  # Проброс порта 8080 на хосте
     volumes:
       - .:/app
       - ./logs:/app/logs
+    ports:
+      - "8004:8004"  # Проброс порта 8080 на хосте
 
 volumes:
   postgres-data:
