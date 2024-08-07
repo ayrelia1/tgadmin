@@ -121,6 +121,7 @@ async def questions(callback: types.CallbackQuery, callback_data: filtersbot.Otd
 
 # ============ Ответ на вопрос ========== # 
 MAX_MESSAGE_LENGTH = 4095
+MAX_MESSAGE_LENGTH_FILE = 2047
 
 def split_text(text, max_length):
     # Split the text into parts not exceeding max_length
@@ -148,8 +149,8 @@ async def question(callback: types.CallbackQuery, callback_data: filtersbot.Ques
         file = FSInputFile(path=f"{UPLOAD_DIRECTORY}/{filename}")
         answer_bot = None
         if answer:
-            answer_bot = answer[:MAX_MESSAGE_LENGTH]
-            remaining_text = answer[MAX_MESSAGE_LENGTH:]
+            answer_bot = answer[:MAX_MESSAGE_LENGTH_FILE]
+            remaining_text = answer[MAX_MESSAGE_LENGTH_FILE:]
         if filename.split('.')[-1] in ['jpg', 'png']:
             await bot.send_photo(caption=answer_bot, chat_id=callback.message.chat.id, photo=file, reply_markup=markup)
             
@@ -162,7 +163,7 @@ async def question(callback: types.CallbackQuery, callback_data: filtersbot.Ques
         
         # Send remaining text if any
         if remaining_text:
-            parts = split_text(remaining_text, MAX_MESSAGE_LENGTH)
+            parts = split_text(remaining_text, MAX_MESSAGE_LENGTH_FILE)
             for part in parts:
                 await bot.send_message(chat_id=callback.message.chat.id, text=part, reply_markup=markup)
     else:
