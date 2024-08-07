@@ -121,7 +121,7 @@ async def questions(callback: types.CallbackQuery, callback_data: filtersbot.Otd
 
 # ============ Ответ на вопрос ========== # 
 MAX_MESSAGE_LENGTH = 4095
-MAX_MESSAGE_LENGTH_FILE = 2047
+MAX_MESSAGE_LENGTH_FILE = 1023
 
 def split_text(text, max_length):
     # Split the text into parts not exceeding max_length
