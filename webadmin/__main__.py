@@ -49,7 +49,7 @@ if __name__ == "__main__":
     
     log_dir = '/app/logs'
     os.makedirs(log_dir, exist_ok=True)  # Создать директорию, если не существует
-    log_file = os.path.join(log_dir, 'app_bot.log')
+    log_file = os.path.join(log_dir, 'app_webadmin.log')
     
     # Создать форматтер
     formatter = logging.Formatter('%(asctime)s - [%(levelname)s] - %(name)s - '
