@@ -56,7 +56,7 @@ if __name__ == "__main__":
                                   '(%(filename)s).%(funcName)s(%(lineno)d) - %(message)s')
     
     #logging.getLogger("requests").setLevel(logging.WARNING)
-    logging.getLogger("apscheduler").setLevel(logging.WARNING)
+    #logging.getLogger("apscheduler").setLevel(logging.WARNING)
     # Настроить основной логгер
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
