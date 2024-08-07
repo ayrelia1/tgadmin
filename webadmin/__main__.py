@@ -55,7 +55,7 @@ if __name__ == "__main__":
     formatter = logging.Formatter('%(asctime)s - [%(levelname)s] - %(name)s - '
                                   '(%(filename)s).%(funcName)s(%(lineno)d) - %(message)s')
     
-    logging.getLogger("requests").setLevel(logging.WARNING)
+    #logging.getLogger("requests").setLevel(logging.WARNING)
     logging.getLogger("apscheduler").setLevel(logging.WARNING)
     # Настроить основной логгер
     logger = logging.getLogger()
